@@ -229,6 +229,7 @@ const about: About = {
           { name: "VS Code", icon: "" },
           { name: "Postman", icon: "" },
           { name: "Figma", icon: "" },
+          { name: "Render", icon: "" },
           { name: "XCode", icon: "" },
           { name: "AntiGravity", icon:"" }
         ],
