@@ -111,7 +111,7 @@ export default function About() {
 
             <Row paddingTop="16">
               <Button
-                href="/Akshat Mahajan.pdf"
+                href="/Akshat Mahajan Resume.pdf"
                 target="_blank"
                 prefixIcon="download"
                 label="View Resume"
