@@ -121,20 +121,24 @@ const about: About = {
     experiences: [
       {
         company: "DigiValet",
-        timeframe: "Jan 2026 - Present",
-        role: "iOS Application Developer",
+        timeframe: "Jan 2026 - Jun 2026",
+        role: "iOS Application Developer Intern",
         achievements: [
           <>
-            Contributed to the enhancement of DigiValet’s iOS applications by implementing UI improvements and refining UIKit-based components to ensure consistency and performance.
+          Delivered production-ready iOS features using Swift, UIKit, and SwiftUI, focusing on scalability, maintainability, and high-quality user experience.          </>,
+          <>
+          Designed reusable UI components and shared utilities that accelerated feature development while ensuring consistency across multiple application modules.
           </>,
           <>
-            Assisted in integrating RESTful APIs and real-time service modules, improving data flow reliability and user interaction responsiveness within the app.
+          Integrated networking layers and backend APIs to support dynamic content, asynchronous data loading, and responsive user interactions.
           </>,
           <>
-            Collaborated with senior developers to debug, optimize, and refactor existing codebases, strengthening application stability and maintainability.
+          Improved application reliability by debugging complex UI and lifecycle issues, optimizing existing implementations, and reducing technical debt through systematic refactoring.
           </>,
           <>
-            Actively learned and applied Swift, UIKit, and architectural best practices (MVVM), contributing to feature enhancements and overall product quality.
+          Worked within an Agile team, collaborating with product managers, designers, QA, and senior engineers to ship customer-facing enhancements on schedule.</>,
+          <>
+          Adopted modern iOS architectural patterns (MVVM) and clean coding practices through code reviews, technical discussions, and continuous learning.
           </>,
         ],
         images: [],
@@ -142,22 +146,28 @@ const about: About = {
       {
         company: "Itigai Technologies",
         timeframe: "Aug 2025 - Oct 2025",
-        role: "Frontend Software Developer",
+        role: "Frontend Software Developer Intern",
         achievements: [
           <>
-            Architected and developed a full-stack universal trip planning platform using modern web technologies, delivering a scalable and responsive user experience.
+            Developed responsive web applications using React.js, Node.js, Express.js, and MongoDB, delivering scalable and user-centric solutions.
           </>,
           <>
-            Designed and implemented modular, reusable UI components with efficient state management, improving maintainability, scalability, and interaction performance.
+            Built reusable UI components and modular architecture, improving development efficiency and long-term maintainability.
           </>,
           <>
-            Engineered a real-time chatbot interface for resale price prediction by integrating frontend logic with a trained machine learning model via RESTful APIs.
+            Integrated RESTful APIs and machine learning services to develop a real-time resale price prediction chatbot.
           </>,
           <>
-            Optimized application performance through clean UI architecture, data-driven rendering, and cross-device responsiveness, enhancing overall user engagement.
+            Enhanced application performance through optimized rendering, efficient state management, and responsive design practices.
           </>,
           <>
-            Built and deployed a fully functional web platform using WordPress, customizing themes, plugins, and backend configurations to meet business requirements.
+            Collaborated with designers and backend developers to deliver intuitive, production-ready user interfaces.
+          </>,
+          <>
+            Developed and deployed WordPress websites by customizing themes, plugins, and backend configurations.
+          </>,
+          <>
+            Maintained code quality through Git-based version control, collaborative workflows, and clean coding practices.
           </>
         ],
         images: [],
@@ -241,11 +251,12 @@ const about: About = {
           <>Strong understanding of software development principles and system design fundamentals.</>
         ),
         tags: [
-          { name: "RESTful APIs", icon: "api" },
-          { name: "Responsive Design", icon: "devices" },
-          { name: "UI/UX", icon: "design" },
-          { name: "State Management", icon: "redux" },
-          { name: "Data Structures & Algorithms", icon: "algorithm" },
+          { name: "RESTful APIs", icon: "" },
+          { name: "Responsive Design", icon: "" },
+          { name: "UI/UX", icon: "" },
+          { name: "State Management", icon: "" },
+          { name: "Data Structures & Algorithms", icon: "" },
+          { name: "MVVM", icon: "" }
         ],
         images: [],
       },
@@ -265,7 +276,7 @@ const blog: Blog = {
 const work: Work = {
   path: "/work",
   label: "Work",
-  title: `Projects – ${person.name}`,
+  title: `Projects by ${person.name}`,
   description: `Design and dev projects by ${person.name}`,
   // Create new project pages by adding a new .mdx file to app/blog/posts
   // All projects will be listed on the /home and /work routes
