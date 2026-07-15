@@ -13,7 +13,6 @@ import {
 interface ProjectCardProps {
   href: string;
   priority?: boolean;
-  images: string[];
   title: string;
   content: string;
   description: string;
@@ -23,7 +22,6 @@ interface ProjectCardProps {
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({
   href,
-  images = [],
   title,
   content,
   description,

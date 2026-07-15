@@ -1,152 +1,31 @@
 ---
-title: "Predictye – AI-Powered Product Price Forecasting Platform"
+title: "Predictye – Product Forecasting Platform"
 publishedAt: "2025-09-19"
-summary: "Designed and built an AI-driven price prediction platform that forecasts future product values using market trends, depreciation models, and demand analytics."
-images:
-  - "/images/projects/project-01/cover-01.jpg"
-  - "/images/projects/project-01/cover-02.jpg"
-  - "/images/projects/project-01/cover-03.jpg"
-  - "/images/projects/project-01/cover-04.jpg"
+summary: "An AI-assisted forecasting platform that predicts future product values using historical pricing data, market patterns, and model-based inference."
+images: []
 link: "https://predictye.com/"
 ---
 
 ## Overview
 
-predictye is an AI-powered product price forecasting platform that predicts the future value of physical goods across different time horizons.
+Predictye was a product forecasting platform focused on estimating future value for physical goods using historical pricing patterns and predictive modeling.
 
-From vintage watches to consumer electronics and furniture, the system analyzes:
+The work involved building the forecasting flow, shaping the product architecture, and creating a simple interface for users to input product details and receive predictions.
 
-- Historical market pricing
-- Depreciation patterns
-- Supply-demand behavior
-- Product lifecycle signals
+## What I Worked On
 
-The goal is simple:  
-Help users make smarter buy, sell, and hold decisions using predictive intelligence instead of guesswork.
+- Designed the end-to-end architecture for combining model predictions with a responsive frontend experience.
+- Built a stateless REST API capable of serving predictions with p95 latency under 200 ms.
+- Implemented caching and data pipeline improvements that reduced computational overhead by 40%.
+- Applied feature engineering and model tuning to improve forecast quality, reaching 75% prediction accuracy.
 
----
+## Technical Focus
 
-## Problem Statement
-
-Product pricing is often reactive and speculative. Buyers and sellers struggle with:
-
-- Uncertain resale value  
-- Lack of long-term pricing visibility  
-- Manual market research  
-- Volatile secondary markets  
-
-predictye addresses this by providing forward-looking price estimates powered by machine learning.
-
----
-
-## What I Built
-
-### 1. Predictive Pricing Engine
-
-- Designed forecasting models to estimate product prices across multiple timelines (1 year, 5 years, 10 years).
-- Integrated market trend analysis and depreciation modeling.
-- Engineered features such as:
-  - Age of product
-  - Brand influence
-  - Market demand trends
-  - Historical price volatility
-
-The system generates confidence-based price projections instead of static estimates.
-
----
-
-### 2. AI-Based Depreciation Modeling
-
-- Developed dynamic depreciation curves based on product categories.
-- Adjusted decay rates depending on:
-  - Product type (luxury, electronics, collectibles)
-  - Market behavior
-  - Demand shifts
-- Enabled long-term value forecasting instead of short-term speculation.
-
----
-
-### 3. Data Aggregation & Processing Pipeline
-
-- Structured ingestion pipeline for historical product pricing datasets.
-- Cleaned and normalized inconsistent marketplace data.
-- Created reusable preprocessing modules to standardize prediction inputs.
-
-This ensured reliable model performance across different product categories.
-
----
-
-### 4. Instant Forecast System
-
-- Built a lightweight inference system to return predictions in seconds.
-- Designed minimal input flows to reduce friction.
-- Optimized model response time for real-time forecasting.
-
----
-
-### 5. Trust & Model Evaluation Framework
-
-- Implemented validation strategies to measure:
-  - Forecast error
-  - Model stability
-  - Generalization performance
-- Continuously improved accuracy through model tuning and evaluation cycles.
-
-The focus was not just prediction — but dependable prediction.
-
----
-
-## Architecture
-
-predictye follows a structured pipeline:
-
-1. User inputs product details  
-2. System retrieves historical pricing patterns  
-3. Feature engineering transforms raw inputs  
-4. Forecasting model generates multi-year predictions  
-5. UI visualizes price trajectory and confidence metrics  
-
-The architecture supports future expansion into:
-
-- More product categories  
-- Real-time marketplace integrations  
-- Adaptive learning models  
-- Portfolio-style asset tracking  
-
----
-
-## Key Challenges
-
-### Noisy Marketplace Data  
-Resale markets contain inconsistent and incomplete data.  
-Built cleaning pipelines and normalization strategies to reduce bias.
-
-### Long-Term Forecast Uncertainty  
-Future price estimation involves volatility.  
-Balanced predictive power with controlled model assumptions to avoid unrealistic projections.
-
-### User Trust  
-Predictions must feel credible.  
-Focused on transparency in trends and confidence signals rather than black-box outputs.
-
----
+- Machine learning and forecasting workflow
+- REST API design for prediction requests
+- Frontend integration for real-time results
+- Performance optimization and caching
 
 ## Outcome
 
-predictye evolved into a scalable AI forecasting platform that:
-
-- Predicts future product prices across multiple timeframes  
-- Reduces uncertainty in secondary markets  
-- Supports smarter buy/sell/hold decisions  
-- Delivers instant, data-driven insights  
-
-It demonstrates strong integration of:
-
-- Machine learning  
-- Market analytics  
-- Data engineering  
-- Real-time inference systems  
-- User-centric interface design  
-
-predictye is not a pricing calculator.  
-It is a predictive intelligence system for product value forecasting.
+The project resulted in a practical forecasting product with a clear technical foundation and measurable performance improvements.

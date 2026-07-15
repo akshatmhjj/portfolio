@@ -109,7 +109,7 @@ export default function About() {
               </Row>
             )}
 
-            <Row paddingTop="16">
+            <Row paddingTop="16" gap="8" wrap>
               <Button
                 href="/Akshat Mahajan Resume.pdf"
                 target="_blank"

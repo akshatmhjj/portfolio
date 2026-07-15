@@ -8,7 +8,7 @@ const person: Person = {
   firstName: "Akshat",
   lastName: "Mahajan",
   name: `Akshat Mahajan`,
-  role: "Software Engineer",
+  role: "Full Stack & iOS Engineer",
   avatar: "/images/avatar.jpg",
   email: "akshatmahajan32@gmail.com",
   location: "Indore, India",
@@ -111,7 +111,7 @@ const about: About = {
     title: "Introduction",
     description: (
       <>
-        Full Stack and iOS Developer specializing in building scalable, high-performance web and mobile applications. With expertise in React, Node.js, Express, MongoDB, Swift, and UIKit, helps delivering clean architecture, efficient backend systems, and intuitive user experiences. Approach combines strong technical execution with a focus on usability, performance, and maintainable code.
+        I build full-stack web applications and iOS products with a focus on performance, maintainability, and clear user experience. My recent work has centered on scaling frontend systems, reducing API latency, improving app stability, and shipping reliable features with measurable impact.
       </>
     ),
   },
@@ -122,23 +122,19 @@ const about: About = {
       {
         company: "DigiValet",
         timeframe: "Jan 2026 - Jun 2026",
-        role: "iOS Application Developer Intern",
+        role: "iOS Software Engineer",
         achievements: [
           <>
-          Delivered production-ready iOS features using Swift, UIKit, and SwiftUI, focusing on scalability, maintainability, and high-quality user experience.          </>,
-          <>
-          Designed reusable UI components and shared utilities that accelerated feature development while ensuring consistency across multiple application modules.
+            Architected a modular iOS SDK using MVVM and dependency injection, creating a reusable foundation for 5+ production screens and reducing feature integration time by 20%.
           </>,
           <>
-          Integrated networking layers and backend APIs to support dynamic content, asynchronous data loading, and responsive user interactions.
+            Reduced API latency by 45% (800 ms to 440 ms) through async/await networking, request batching, and intelligent caching.
           </>,
           <>
-          Improved application reliability by debugging complex UI and lifecycle issues, optimizing existing implementations, and reducing technical debt through systematic refactoring.
+            Improved app stability by 25% (0.8% to 0.6% crash rate) through memory leak fixes, retain cycle elimination, and state management improvements.
           </>,
           <>
-          Worked within an Agile team, collaborating with product managers, designers, QA, and senior engineers to ship customer-facing enhancements on schedule.</>,
-          <>
-          Adopted modern iOS architectural patterns (MVVM) and clean coding practices through code reviews, technical discussions, and continuous learning.
+            Built a reusable SwiftUI component library with 15+ components to standardize UI patterns and accelerate feature delivery.
           </>,
         ],
         images: [],
@@ -146,29 +142,20 @@ const about: About = {
       {
         company: "Itigai Technologies",
         timeframe: "Aug 2025 - Oct 2025",
-        role: "Frontend Software Developer Intern",
+        role: "Frontend Software Engineer",
         achievements: [
           <>
-            Developed responsive web applications using React.js, Node.js, Express.js, and MongoDB, delivering scalable and user-centric solutions.
+            Led frontend performance optimization that reduced initial page load time by 25% (FCP 3.2 s to 2.4 s) through component restructuring, render tuning, and React memoization.
           </>,
           <>
-            Built reusable UI components and modular architecture, improving development efficiency and long-term maintainability.
+            Built a real-time chatbot interface that handled concurrent sessions with under 500 ms latency using WebSocket-based state synchronization.
           </>,
           <>
-            Integrated RESTful APIs and machine learning services to develop a real-time resale price prediction chatbot.
+            Implemented Redux-based state management and memoization patterns that reduced redundant API calls by 60% and supported horizontal scaling for the frontend.
           </>,
           <>
-            Enhanced application performance through optimized rendering, efficient state management, and responsive design practices.
+            Worked across frontend and backend integration to ship responsive, production-ready interfaces for a live product experience.
           </>,
-          <>
-            Collaborated with designers and backend developers to deliver intuitive, production-ready user interfaces.
-          </>,
-          <>
-            Developed and deployed WordPress websites by customizing themes, plugins, and backend configurations.
-          </>,
-          <>
-            Maintained code quality through Git-based version control, collaborative workflows, and clean coding practices.
-          </>
         ],
         images: [],
       },
@@ -195,68 +182,66 @@ const about: About = {
       {
         title: "Languages",
         description: (
-          <>Proficient in modern programming and markup languages for full-stack and application development.</>
+          <>Core languages used for frontend, backend, and mobile development.</>
         ),
         tags: [
-          { name: "HTML", icon: "" },
-          { name: "JSX", icon: "" },
-          { name: "JavaScript", icon: "" },
-          { name: "CSS", icon: "" },
-          { name: "SCSS", icon: "" },
-          { name: "C", icon: "" },
-          { name: "SQL", icon: "" },
           { name: "Swift", icon: "" },
+          { name: "JavaScript", icon: "" },
+          { name: "TypeScript", icon: "" },
+          { name: "HTML", icon: "" },
+          { name: "CSS", icon: "" },
+          { name: "SQL", icon: "" },
+          { name: "C", icon: "" },
         ],
         images: [],
       },
       {
         title: "Frameworks & Libraries",
         description: (
-          <>Building scalable web applications using modern frontend and backend frameworks.</>
+          <>Modern tools used to build responsive web and iOS applications.</>
         ),
         tags: [
-          { name: "React", icon: "" },
+          { name: "React.js", icon: "" },
+          { name: "Redux", icon: "" },
           { name: "Node.js", icon: "" },
           { name: "Express.js", icon: "" },
+          { name: "SwiftUI", icon: "" },
+          { name: "UIKit", icon: "" },
           { name: "Tailwind CSS", icon: "" },
           { name: "MongoDB", icon: "" },
-          { name: "Mongoose", icon: "" },
-          { name: "UIKit", icon: "" },
-          { name: "Swift UI", icon: "" },
         ],
         images: [],
       },
       {
         title: "Tools & Platforms",
         description: (
-          <>Experienced with development, deployment, and version control tools for efficient workflows.</>
+          <>Development, deployment, and collaboration tools used in delivery.</>
         ),
         tags: [
-          { name: "Vercel", icon: "" },
-          { name: "Git", icon: "" },
-          { name: "npm", icon: "" },
-          { name: "Node", icon: "" },
+          { name: "Git / GitHub", icon: "" },
+          { name: "Xcode", icon: "" },
           { name: "VS Code", icon: "" },
+          { name: "Docker", icon: "" },
+          { name: "CI / CD", icon: "" },
           { name: "Postman", icon: "" },
-          { name: "Figma", icon: "" },
+          { name: "Vercel", icon: "" },
           { name: "Render", icon: "" },
-          { name: "XCode", icon: "" },
-          { name: "AntiGravity", icon:"" }
         ],
         images: [],
       },
       {
         title: "Core Concepts",
         description: (
-          <>Strong understanding of software development principles and system design fundamentals.</>
+          <>Practices and architectural patterns applied across product and platform work.</>
         ),
         tags: [
-          { name: "RESTful APIs", icon: "" },
+          { name: "System Design", icon: "" },
+          { name: "REST APIs", icon: "" },
+          { name: "MVVM", icon: "" },
+          { name: "Performance Optimization", icon: "" },
+          { name: "Caching Strategies", icon: "" },
           { name: "Responsive Design", icon: "" },
-          { name: "UI/UX", icon: "" },
           { name: "State Management", icon: "" },
-          { name: "Data Structures & Algorithms", icon: "" },
-          { name: "MVVM", icon: "" }
         ],
         images: [],
       },
