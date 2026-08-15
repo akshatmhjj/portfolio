@@ -1,0 +1,45 @@
+# URL Shortener – High Performance Link Management Platform
+
+---
+
+title: "URL Shortener – High Performance Link Management Platform"
+publishedAt: "2026-08-15"
+summary: "A production-grade URL shortener built with React, Node.js, Express, PostgreSQL, and Redis, featuring collision-free Base62 encoding, cache-aside redirects, non-blocking analytics, and containerized deployment."
+images: []
+link: "https://url-shortener-navy-eta.vercel.app/"
+--------------------------------------------------
+
+## Overview
+
+The URL Shortener is a full-stack link management platform designed for fast URL redirection, analytics, and scalable backend operations. It uses React and Vite for the frontend, Node.js and Express for backend services, PostgreSQL for persistent storage, and Redis for high-speed caching.
+
+The system demonstrates production-oriented backend practices including atomic short-code generation, cache-aside architecture, non-blocking analytics, authentication, rate limiting, structured logging, and containerized deployment.
+
+## What I Worked On
+
+* Architected a tiered backend with Express.js, Redis caching, and PostgreSQL persistence for low-latency redirects.
+* Implemented collision-free short-code generation using a PostgreSQL atomic counter and Base62 encoding.
+* Built a cache-aside strategy with 24-hour TTLs and explicit invalidation to reduce database load on frequently accessed links.
+* Designed non-blocking click analytics so redirect responses remain independent of analytics write throughput.
+* Designed PostgreSQL schemas and indexes for efficient redirects, dashboard queries, pagination, and active URL filtering.
+* Containerized the application using multi-stage Docker builds and configured graceful shutdown handling.
+* Set up Docker Compose for consistent local development with healthcheck-based service startup and hot-reload volumes.
+* Built a React dashboard with URL management, analytics visualization, React Router, and Google OAuth authentication.
+* Added production safeguards including request ID tracing, structured logging, CORS configuration, rate limiting, and security headers.
+* Implemented CI/CD workflows with GitHub Actions and Vercel deployment.
+
+## Technical Stack
+
+* React.js and Vite for the frontend interface
+* Node.js and Express.js for backend services
+* PostgreSQL for persistent data storage
+* Redis for caching and redirect optimization
+* React Router and Recharts for dashboard navigation and analytics
+* JWT and Google OAuth for authentication
+* Docker and Docker Compose for containerization and development
+* GitHub Actions and Vercel for deployment
+* Helmet, express-rate-limit, Joi, and structured JSON logging for production security and observability
+
+## Outcome
+
+The project demonstrates a production-oriented URL shortening architecture focused on low-latency redirects, reliable short-code generation, efficient database access, asynchronous analytics, and operational observability. The stateless backend architecture provides a foundation for horizontal scaling with managed PostgreSQL and Redis infrastructure.
