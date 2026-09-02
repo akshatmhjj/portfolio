@@ -101,6 +101,32 @@ export default async function Project({
         </Text> */}
         <Heading variant="display-strong-m">{post.metadata.title}</Heading>
       </Column>
+      {post.metadata.versions && post.metadata.versions.length > 0 && (
+        <Row gap="8" vertical="center" horizontal="center" wrap marginBottom="24">
+          {post.metadata.versions.map((version, index) => (
+            <div key={version.label}>
+              <SmartLink href={version.link} target="_blank">
+                <Text
+                  as="span"
+                  variant="label-default-s"
+                  onBackground="brand-weak"
+                >
+                  {version.label} · {version.name}
+                </Text>
+              </SmartLink>
+              {index < post.metadata.versions!.length - 1 && (
+                <Text
+                  as="span"
+                  variant="body-default-s"
+                  onBackground="neutral-weak"
+                >
+                  {" · "}
+                </Text>
+              )}
+            </div>
+          ))}
+        </Row>
+      )}
       <Row marginBottom="32" horizontal="center">
         <Row gap="16" vertical="center">
           {post.metadata.team && <AvatarGroup reverse avatars={avatars} size="s" />}

@@ -8,6 +8,18 @@ import { zones } from "tzdata";
 export type IANATimeZone = Extract<keyof typeof zones, string>; // Narrow to string keys for React usage
 
 /**
+ * Version information for a project.
+ */
+export type Version = {
+  /** Label for the version (e.g., 'v1.0', 'v1') */
+  label: string;
+  /** Name or description of the version */
+  name: string;
+  /** Link to the version */
+  link: string;
+};
+
+/**
  * Represents a person featured in the portfolio.
  */
 export type Person = {

@@ -34,15 +34,15 @@ const social: Social = [
   {
     name: "LinkedIn",
     icon: "linkedin",
-    link: "https://www.linkedin.com/in/akshat-mahajan-601a5a223/",
+    link: "www.linkedin.com/in/akshatmhjj",
     essential: true,
   },
-  {
-    name: "Instagram",
-    icon: "instagram",
-    link: "https://www.instagram.com/akshatmahjn/",
-    essential: true,
-  },
+  // {
+  //   name: "Instagram",
+  //   icon: "instagram",
+  //   link: "https://www.instagram.com/akshatmahjn/",
+  //   essential: true,
+  // },
   // {
   //   name: "Threads",
   //   icon: "threads",
@@ -191,7 +191,6 @@ const about: About = {
           { name: "HTML", icon: "" },
           { name: "CSS", icon: "" },
           { name: "SQL", icon: "" },
-          { name: "C", icon: "" },
         ],
         images: [],
       },
