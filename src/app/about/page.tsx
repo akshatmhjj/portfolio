@@ -50,6 +50,11 @@ export default function About() {
       display: about.technical.display,
       items: about.technical.skills.map((skill) => skill.title),
     },
+    {
+      title: about.certifications.title,
+      display: about.certifications.display,
+      items: about.certifications.items.map((certification) => certification.name),
+    },
   ];
   return (
     <Column maxWidth="m">
@@ -343,6 +348,34 @@ export default function About() {
                       </Row>
                     )}
                   </Column>
+                ))}
+              </Column>
+            </>
+          )}
+
+          {about.certifications.display && (
+            <>
+              <Heading
+                as="h2"
+                id={about.certifications.title}
+                variant="display-strong-s"
+                marginBottom="40"
+                marginTop="40"
+              >
+                {about.certifications.title}
+              </Heading>
+              <Column fillWidth gap="m" paddingTop="16">
+                {about.certifications.items.map((certification, index) => (
+                  <Text
+                    as="a"
+                    href={certification.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    key={`${certification.name}-${index}`}
+                    variant="body-default-m"
+                  >
+                    {certification.name}
+                  </Text>
                 ))}
               </Column>
             </>

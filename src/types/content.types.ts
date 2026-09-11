@@ -221,6 +221,20 @@ export interface About extends BasePageConfig {
       }>;
     }>;
   };
+  /** Certifications section */
+  certifications: {
+    /** Whether to display certifications */
+    display: boolean;
+    /** Title for the certifications section */
+    title: string;
+    /** List of certifications */
+    items: Array<{
+      /** Certification name */
+      name: string;
+      /** Certificate verification link */
+      link: string;
+    }>;
+  };
 }
 
 /**

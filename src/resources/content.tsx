@@ -246,6 +246,40 @@ const about: About = {
       },
     ],
   },
+  certifications: {
+    display: true,
+    title: "Certifications",
+    items: [
+      {
+        name: "RDBMS [IBM]",
+        link: "https://courses.svvv.skillsnetwork.site/certificates/c1af0898561045808fa96afb65744472",
+      },
+      {
+        name: "Microservices architecture and implementation [IBM]",
+        link: "https://courses.svvv.skillsnetwork.site/certificates/b8aa7f007cc74c8d93a710743657696c",
+      },
+      {
+        name: "Introduction to Python [IBM]",
+        link: "https://courses.svvv.skillsnetwork.site/certificates/a77891b4e4b0489caa1770ec2e15058d",
+      },
+      {
+        name: "Java Fundamentals [IBM]",
+        link: "https://courses.svvv.skillsnetwork.site/certificates/e1d30d7a294a4aa3b4065bb3ca0a4908",
+      },
+      {
+        name: "Cloud Application Developer [IBM]",
+        link: "https://courses.svvv.skillsnetwork.site/certificates/005762eaf3294695acae0b6595fe1b57",
+      },
+      {
+        name: "Data Science 101 [IBM]",
+        link: "https://courses.svvv.skillsnetwork.site/certificates/45a2df94eae547bb9c5654ba323d9245",
+      },
+      {
+        name: "Reactive Architecture: Reactive Microservices [Cognitive Class]",
+        link: "https://courses.cognitiveclass.ai/certificates/59017f74c71d44559b0440973a4cd80a",
+      },
+    ],
+  },
 };
 
 const blog: Blog = {
