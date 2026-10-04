@@ -1,0 +1,58 @@
+---
+title: "Grounded"
+publishedAt: "2026-10-04"
+summary: "A fully local document chatbot that answers only from your own files, cites every fact, and refuses when the documents don't cover the question."
+images: []
+link: "https://github.com/akshatmhjj/basic-rag-chatbot"
+---
+
+## Overview
+
+Grounded is a retrieval-augmented document chatbot that runs entirely on the local machine.
+Documents are chunked, embedded and stored in a persistent Chroma vector database; questions are
+answered by a local llama3.2 model that is only allowed to use the retrieved text. No API keys,
+no cloud calls, no document ever leaves the machine.
+
+The project is built around the failure mode that matters most in RAG: a confident answer that
+the documents do not support. Every answer carries the source file it came from, two independent
+guards decide when to refuse instead of guessing, and a measurement harness scores retrieval and
+answer quality separately, so a bad answer can be traced to the stage that caused it.
+
+## What I Worked On
+
+* Built the full RAG pipeline end to end: document loading, chunking, embedding, vector search, grounded generation and refusal.
+* Implemented document-aware chunking that splits markdown on headings rather than character counts, and repeats the heading on every piece of an oversized section so each chunk stays self-describing.
+* Added per-page PDF ingestion so retrieved context carries page numbers into the citation.
+* Designed a two-guard refusal strategy: a cosine-similarity threshold that refuses before the model is ever called, and a grounding prompt that makes the model refuse with an exact sentence when the retrieved text falls short.
+* Built an evaluation harness that scores retrieval hit rate, answer fact rate and refusal accuracy as separate metrics, so retrieval failures and generation failures are never confused with each other.
+* Measured 100% retrieval hit rate, 90% answer fact rate and 92.9% refusal accuracy across a 14-question set of answerable and deliberately unanswerable questions, at ~332 input tokens per question.
+* Used the eval as a tuning instrument: the similarity threshold and chunking strategy were chosen by comparing scored runs, with every run's settings and results appended to a history file for comparison.
+* Instrumented every query with structured JSONL logging: the answer, whether it refused and at which stage, the best similarity, the retrieved chunk IDs, token counts and a snapshot of the settings that produced it.
+* Documented the failures honestly, including a case where the small model gave a confident wrong answer about a refund window, and traced each one to retrieval or generation.
+* Built a Streamlit interface over the same core the CLI uses, so the UI cannot drift from the answering logic.
+* Made retrieval observable in the UI: live `top_k` and refusal-threshold sliders, a panel showing every retrieved chunk with its similarity score and text, in-app index rebuilding, and a view of recent queries.
+* Isolated all configuration in one file and all model calls in another, so switching from local Ollama to a hosted provider is a change of two values rather than a rewrite.
+* Added self-healing connection handling after a long-running session surfaced stale database and HTTP handles as misleading "no index" errors.
+
+## Technical Stack
+
+* Python for the full pipeline
+* Ollama running llama3.2 for generation and nomic-embed-text for embeddings, entirely local
+* ChromaDB as the persistent vector store, with cosine similarity
+* OpenAI-compatible client as the single model boundary, which keeps hosted providers a drop-in swap
+* pypdf for per-page PDF extraction
+* Streamlit for the browser interface, plus a terminal chat for quick iteration
+* JSONL structured logging for queries and evaluation runs
+
+## Outcome
+
+The project is less a chatbot than an argument that RAG quality is measurable. Retrieval and
+generation are scored independently, the refusal path is treated as a feature with its own
+accuracy metric, and every design choice that could have been a guess, the chunking strategy and
+the similarity threshold in particular, was settled by comparing evaluation runs.
+
+The honest result is a system whose retrieval is reliable and whose remaining errors are
+generation errors from a small local model, each one documented with the fix it points to:
+stricter prompt rules for comparing dates against policy windows, negative assertions in the
+eval set, and a larger model measured against the same harness. Because configuration and model
+access are isolated, that comparison is a configuration change rather than a rewrite.

@@ -185,9 +185,10 @@ const about: About = {
           <>Core languages used for frontend, backend, and mobile development.</>
         ),
         tags: [
-          { name: "Swift", icon: "" },
           { name: "JavaScript", icon: "" },
           { name: "TypeScript", icon: "" },
+          { name: "Python", icon: "" },
+          { name: "Swift", icon: "" },  
           { name: "HTML", icon: "" },
           { name: "CSS", icon: "" },
           { name: "SQL", icon: "" },
