@@ -1,7 +1,7 @@
 ---
 title: "Code Journey"
 publishedAt: "2026-09-02"
-summary: "A learning platform designed to help developers navigate web development through structured learning paths, practical resources, and progress-focused guidance."
+summary: "A role-based map for tech careers: pick a role, see the exact skills it needs in order, and the best free resources for each one, guided by an AI assistant trained on the site's own content."
 images: []
 link: "https://www.codejourney.space/"
 versions:
@@ -12,65 +12,36 @@ versions:
     name: "React Platform"
     link: "https://code-journey-zeta.vercel.app/"
   - label: "v3"
-    name: "Optimized"
+    name: "Current"
     link: "https://www.codejourney.space/"
 ---
 
 ## Overview
 
-Code Journey evolved from a lightweight static learning website into a scalable full-stack platform for structured roadmaps, progress tracking, and company-oriented learning.
+Code Journey is a free, role-based map for tech careers. Pick a role and see exactly which skills it needs, in what order, with the best official docs and free resources for each one. No courses, no paywalls. Code Journey curates, it doesn't teach.
 
-Each version focused on a different stage of the product: establishing the learning experience in **v1**, rebuilding it as a production-ready application in **v2**, and refining its architecture, performance, developer experience, and accessibility in **v3**.
+The platform is built on Next.js (App Router) and TypeScript, with Supabase (Postgres + pgvector) for data and search, and a Gemini-powered AI assistant that answers questions using retrieval-augmented generation over the site's own content.
 
-## The Evolution Journey
+## Key Features
 
-### V1 - Foundation
-
-The project began as a static learning platform built with **HTML5, CSS3, and vanilla JavaScript**.
-
-- Structured beginner-friendly content covering internet, frontend, backend, and full-stack concepts.
-- Built responsive pages with lightweight navigation and UI interactions.
-- Established the initial content structure and learning approach.
-- Used Git and GitHub for version control and deployment.
-
-**Milestone:** Created the MVP foundation that the later versions were built upon.
-
-### V2 - Production Platform
-
-v2 transformed the static MVP into a full-stack application using **React, Redux, Node.js, Express, and MongoDB**.
-
-- Rebuilt the frontend with a scalable React architecture and Redux state management.
-- Added REST APIs and MongoDB-backed content and progress tracking.
-- Introduced structured roadmaps and company-oriented learning content.
-- Set up CI/CD with GitHub Actions and Vercel.
-- Improved FCP from **3.2s to 1.1s** and API latency from **500ms to 120ms**.
-
-**Milestone:** Evolved the project into a production-oriented learning platform with stronger architecture and performance.
-
-### V3 - Refinement, Features & Accessibility
-
-v3 focused on making the platform more maintainable and capable while preserving its core learning experience.
-
-- Refactored state management toward **Context API / Zustand**, reducing Redux boilerplate.
-- Migrated the codebase to **TypeScript** for stronger type safety and developer experience.
-- Reduced client-side bundle size by **40%** through code splitting and lazy loading.
-- Added **WebSocket-based real-time progress updates** and collaborative functionality.
-- Migrated the database layer from MongoDB to **Supabase and PostgreSQL**.
-- Enhanced security with JWT refresh cycles and request validation.
-- Improved accessibility and usability as part of the platform's broader frontend refinement.
-
-**Milestone:** Turned the feature-complete product into a more maintainable, scalable, tested, and accessible platform.
+- **Role maps** - 10 launch roles (Frontend, Backend, Full-Stack, Cross-platform Mobile, Data Analyst, Data Scientist, AI Engineer, ML Engineer, DevOps, QA/SDET), each broken into ordered skills linking to official docs and free resources.
+- **CJ AI** - a retrieval-augmented chatbot grounded entirely in the site's own content (900+ indexed passages), using hybrid vector and keyword search, with streamed, cited answers.
+- **Personal dashboard** - signed-in users can save roles, track skill progress (to do, learning, done), and see remaining stages and estimated hours.
+- **Compass quiz** - a short quiz that ranks roles by fit for the user's interests and background.
+- **Gap checker** - compares a user's existing skills against any role's requirements, matched entirely in the browser.
+- **Role comparison** - side-by-side skill overlap between any two roles.
+- **Public profiles** - an opt-in, shareable progress page at /u/[handle].
+- **Four visual themes** - Juniper, Harbor, Tangerine, and Orchard, each with light and dark modes.
+- **Installable PWA** - works offline for previously visited pages.
 
 ## Technical Stack
 
-- **Frontend:** React.js, TypeScript, Context API / Zustand, Tailwind CSS
-- **Backend:** Node.js, Express.js, WebSockets
-- **Database:** MongoDB, indexing, PostgreSQL, Supabase
-- **DevOps:** GitHub Actions, Vercel
+- **Frontend:** Next.js (App Router), TypeScript, Tailwind CSS
+- **AI:** Google Gemini (generation + embeddings), retrieval-augmented generation, hybrid pgvector + tsvector search
+- **Database & Auth:** Supabase (PostgreSQL, pgvector), Google and GitHub OAuth
+- **Infrastructure:** Vercel, Cloudflare DNS
 - **Version Control:** Git, GitHub
 
 ## Outcome
 
-Code Journey's evolution reflects a progression from **learning-focused MVP → production full-stack application → maintainable and scalable platform**.
-
-The latest version reduces technical debt while providing stronger foundations for future features, performance improvements, testing, and accessibility.
+Code Journey is live at codejourney.space as a free, curated map for tech careers. No account is needed to browse any role map; the personal layer (saved progress, quiz, gap checker, public profile) is opt-in for users who sign in. The whole map currently covers 10 roles and about 100 individual skills, with more roles planned.
