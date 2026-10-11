@@ -50,6 +50,12 @@ const social: Social = [
   //   essential: false,
   // },
   {
+    name: "Code Journey",
+    icon: "codeJourney",
+    link: "https://www.codejourney.space/u/akshatmhjj",
+    essential: true,
+  },
+  {
     name: "Email",
     icon: "email",
     link: `mailto:${person.email}`,
