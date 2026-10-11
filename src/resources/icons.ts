@@ -1,4 +1,5 @@
 import { IconType } from "react-icons";
+import { CodeJourneyIcon } from "./code-journey-icon";
 
 import {
   HiArrowUpRight,
@@ -32,6 +33,7 @@ import {
 import { FaDiscord, FaGithub, FaLinkedin, FaX, FaThreads, FaInstagram, FaXTwitter, FaFacebook, FaPinterest, FaWhatsapp, FaReddit, FaTelegram, } from "react-icons/fa6";
 
 export const iconLibrary: Record<string, IconType> = {
+  codeJourney: CodeJourneyIcon,
   arrowUpRight: HiArrowUpRight,
   arrowRight: HiArrowRight,
   email: HiEnvelope,
