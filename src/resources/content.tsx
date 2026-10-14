@@ -118,6 +118,9 @@ const about: About = {
     description: (
       <>
         I build full-stack web applications and iOS products with a focus on performance, maintainability, and clear user experience. My recent work has centered on scaling frontend systems, reducing API latency, improving app stability, and shipping reliable features with measurable impact.
+        <br />
+        <br />
+        I also work on applied AI, including retrieval-augmented systems that ground answers in source documents. Their behaviour is tracked against a fixed evaluation set, so changes can be measured rather than judged by eye.
       </>
     ),
   },
@@ -125,6 +128,26 @@ const about: About = {
     display: true, // set to false to hide this section
     title: "Work Experience",
     experiences: [
+      {
+        company: "MLock Innovations",
+        timeframe: "Sep 2026 - Present",
+        role: "Software Engineer Intern",
+        achievements: [
+          <>
+            Built a multi-tenant IoT self-service platform end to end: three Next.js and TypeScript web apps on a Node.js, Express and PostgreSQL backend with 80+ REST endpoints.
+          </>,
+          <>
+            Designed secure payment flows with server-side pricing, signature-verified webhooks and idempotent capture, preventing price tampering and duplicate charges.
+          </>,
+          <>
+            Built a concurrency-safe job queue for connected devices using PostgreSQL row-level locking, with live status updates over WebSockets.
+          </>,
+          <>
+            Implemented JWT authentication, role-based access control and tenant isolation across admin dashboards, covered by 200+ automated tests.
+          </>,
+        ],
+        images: [],
+      },
       {
         company: "DigiValet",
         timeframe: "Jan 2026 - Jun 2026",
@@ -172,7 +195,7 @@ const about: About = {
     title: "Studies",
     institutions: [
       {
-        name: "Shree Vaishnav Vidhyapeeth Vishwavidyalaya",
+        name: "Shri Vaishnav Vidhyapeeth Vishwavidyalaya",
         description: <>Bachelor Of Technology [CSE IBM-FSDB]</>,
       },
       {
@@ -194,7 +217,7 @@ const about: About = {
           { name: "JavaScript", icon: "" },
           { name: "TypeScript", icon: "" },
           { name: "Python", icon: "" },
-          { name: "Swift", icon: "" },  
+          { name: "Swift", icon: "" },
           { name: "HTML", icon: "" },
           { name: "CSS", icon: "" },
           { name: "SQL", icon: "" },
@@ -208,6 +231,7 @@ const about: About = {
         ),
         tags: [
           { name: "React.js", icon: "" },
+          { name: "Next.js", icon: "" },
           { name: "Redux", icon: "" },
           { name: "Node.js", icon: "" },
           { name: "Express.js", icon: "" },
@@ -215,6 +239,26 @@ const about: About = {
           { name: "UIKit", icon: "" },
           { name: "Tailwind CSS", icon: "" },
           { name: "MongoDB", icon: "" },
+          { name: "PostgreSQL", icon: "" },
+        ],
+        images: [],
+      },
+      {
+        title: "AI & LLMs",
+        description: (
+          <>Building grounded AI features: retrieval, structured outputs, and evaluation.</>
+        ),
+        tags: [
+          { name: "RAG", icon: "" },
+          { name: "Embeddings", icon: "" },
+          { name: "Vector Search", icon: "" },
+          { name: "Chroma", icon: "" },
+          { name: "LLM APIs", icon: "" },
+          { name: "Ollama", icon: "" },
+          { name: "Structured Outputs", icon: "" },
+          { name: "Tool Calling", icon: "" },
+          { name: "Prompt Engineering", icon: "" },
+          { name: "Evaluation Harnesses", icon: "" },
         ],
         images: [],
       },
@@ -232,6 +276,8 @@ const about: About = {
           { name: "Postman", icon: "" },
           { name: "Vercel", icon: "" },
           { name: "Render", icon: "" },
+          { name: "AWS S3", icon: "" },
+          { name: "Jest", icon: "" },
         ],
         images: [],
       },
@@ -248,6 +294,10 @@ const about: About = {
           { name: "Caching Strategies", icon: "" },
           { name: "Responsive Design", icon: "" },
           { name: "State Management", icon: "" },
+          { name: "RBAC & JWT Auth", icon: "" },
+          { name: "Multi-tenant Architecture", icon: "" },
+          { name: "Payment Integration", icon: "" },
+          { name: "Real-time Systems", icon: "" },
         ],
         images: [],
       },
