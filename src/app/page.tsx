@@ -12,6 +12,7 @@ import {
   Meta,
   Schema,
   Row,
+  SmartLink,
 } from "@once-ui-system/core";
 import { baseURL, about, person, social } from "@/resources";
 import TableOfContents from "@/components/about/TableOfContents";
@@ -41,14 +42,14 @@ export default function Home() {
       items: about.work.experiences.map((experience) => experience.company),
     },
     {
-      title: about.studies.title,
-      display: about.studies.display,
-      items: about.studies.institutions.map((institution) => institution.name),
-    },
-    {
       title: about.technical.title,
       display: about.technical.display,
       items: about.technical.skills.map((skill) => skill.title),
+    },
+    {
+      title: about.studies.title,
+      display: about.studies.display,
+      items: about.studies.institutions.map((institution) => institution.name),
     },
     {
       title: about.certifications.title,
@@ -113,17 +114,6 @@ export default function Home() {
                 ))}
               </Row>
             )}
-
-            <Row paddingTop="16" gap="8" wrap>
-              <Button
-                href="/Akshat Mahajan Resume.pdf"
-                target="_blank"
-                prefixIcon="download"
-                label="View Resume"
-                size="m"
-                variant="primary"
-              />
-            </Row>
           </Column>
         )}
         <Column className={styles.blockAlign} flex={9} maxWidth={40}>
@@ -214,17 +204,62 @@ export default function Home() {
           </Column>
 
           {about.intro.display && (
-            <Column textVariant="body-default-l" fillWidth gap="m" marginBottom="xl">
-              {about.intro.description}
+            <Column textVariant="body-default-l" fillWidth gap="m" marginBottom="l">
+              <div>{about.intro.description}</div>
+              <Row gap="8" wrap paddingTop="8">
+                <Button
+                  href={`mailto:${person.email}`}
+                  prefixIcon="email"
+                  label="Email me"
+                  size="m"
+                  variant="primary"
+                />
+                <Button
+                  href="/Akshat Mahajan Resume.pdf"
+                  target="_blank"
+                  prefixIcon="download"
+                  label="View resume"
+                  size="m"
+                  variant="secondary"
+                />
+              </Row>
             </Column>
+          )}
+
+          {about.impact.display && (
+            <Row fillWidth wrap gap="24">
+              {about.impact.items.map((item) => {
+                const stat = (
+                  <Column gap="4" fillWidth>
+                    <Heading variant="display-strong-s">{item.value}</Heading>
+                    <Text variant="body-default-s" onBackground="neutral-weak">
+                      {item.label}
+                    </Text>
+                  </Column>
+                );
+                return item.href ? (
+                  <SmartLink
+                    key={item.label}
+                    href={item.href}
+                    style={{ flex: "1 1 160px", textDecoration: "none" }}
+                  >
+                    {stat}
+                  </SmartLink>
+                ) : (
+                  <Column key={item.label} style={{ flex: "1 1 160px" }}>
+                    {stat}
+                  </Column>
+                );
+              })}
+            </Row>
           )}
 
           {about.work.display && (
             <>
-              <Heading as="h2" id={about.work.title} variant="display-strong-s" marginBottom="m">
+              <Heading as="h2" id={about.work.title} variant="display-strong-s" marginTop="40" marginBottom="m">
                 {about.work.title}
               </Heading>
-              <Column fillWidth gap="l" marginBottom="40">
+              <Column fillWidth gap="l">
                 {about.work.experiences.map((experience, index) => (
                   <Column key={`${experience.company}-${experience.role}-${index}`} fillWidth>
                     <Row fillWidth horizontal="between" vertical="end" marginBottom="4">
@@ -278,33 +313,14 @@ export default function Home() {
             </>
           )}
 
-          {about.studies.display && (
-            <>
-              <Heading as="h2" id={about.studies.title} variant="display-strong-s" marginBottom="m">
-                {about.studies.title}
-              </Heading>
-              <Column fillWidth gap="l" marginBottom="40">
-                {about.studies.institutions.map((institution, index) => (
-                  <Column key={`${institution.name}-${index}`} fillWidth gap="4">
-                    <Text id={institution.name} variant="heading-strong-l">
-                      {institution.name}
-                    </Text>
-                    <Text variant="heading-default-xs" onBackground="neutral-weak">
-                      {institution.description}
-                    </Text>
-                  </Column>
-                ))}
-              </Column>
-            </>
-          )}
-
           {about.technical.display && (
             <>
               <Heading
                 as="h2"
                 id={about.technical.title}
                 variant="display-strong-s"
-                marginBottom="40"
+                marginTop="40"
+                marginBottom="m"
               >
                 {about.technical.title}
               </Heading>
@@ -314,9 +330,11 @@ export default function Home() {
                     <Text id={skill.title} variant="heading-strong-l">
                       {skill.title}
                     </Text>
-                    <Text variant="body-default-m" onBackground="neutral-weak">
-                      {skill.description}
-                    </Text>
+                    {skill.description && (
+                      <Text variant="body-default-m" onBackground="neutral-weak">
+                        {skill.description}
+                      </Text>
+                    )}
                     {skill.tags && skill.tags.length > 0 && (
                       <Row wrap gap="8" paddingTop="8">
                         {skill.tags.map((tag, tagIndex) => (
@@ -353,18 +371,44 @@ export default function Home() {
             </>
           )}
 
+          {about.studies.display && (
+            <>
+              <Heading
+                as="h2"
+                id={about.studies.title}
+                variant="display-strong-s"
+                marginTop="40"
+                marginBottom="m"
+              >
+                {about.studies.title}
+              </Heading>
+              <Column fillWidth gap="l">
+                {about.studies.institutions.map((institution, index) => (
+                  <Column key={`${institution.name}-${index}`} fillWidth gap="4">
+                    <Text id={institution.name} variant="heading-strong-l">
+                      {institution.name}
+                    </Text>
+                    <Text variant="heading-default-xs" onBackground="neutral-weak">
+                      {institution.description}
+                    </Text>
+                  </Column>
+                ))}
+              </Column>
+            </>
+          )}
+
           {about.certifications.display && (
             <>
               <Heading
                 as="h2"
                 id={about.certifications.title}
                 variant="display-strong-s"
-                marginBottom="40"
                 marginTop="40"
+                marginBottom="m"
               >
                 {about.certifications.title}
               </Heading>
-              <Column fillWidth gap="m" paddingTop="16">
+              <Column fillWidth gap="m">
                 {about.certifications.items.map((certification, index) => (
                   <Text
                     as="a"

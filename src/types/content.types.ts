@@ -148,6 +148,20 @@ export interface About extends BasePageConfig {
     /** Description of the introduction section */
     description: React.ReactNode;
   };
+  /** Impact stats shown under the introduction */
+  impact: {
+    /** Whether to display the impact stats */
+    display: boolean;
+    /** List of stats */
+    items: Array<{
+      /** Big value, e.g. "45%" */
+      value: string;
+      /** Short description under the value */
+      label: string;
+      /** Optional link, e.g. to a related project */
+      href?: string;
+    }>;
+  };
   /** Work experience section */
   work: {
     /** Whether to display work experience */

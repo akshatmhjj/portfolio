@@ -120,12 +120,33 @@ const about: About = {
         <strong>Open to full-time roles and relocation.</strong>
         <br />
         <br />
-        I build full-stack web applications and iOS products with a focus on performance, maintainability, and clear user experience. My recent work has centered on scaling frontend systems, reducing API latency, improving app stability, and shipping reliable features with measurable impact.
-        <br />
-        <br />
-        I also work on applied AI, including retrieval-augmented systems that ground answers in source documents. Their behaviour is tracked against a fixed evaluation set, so changes can be measured rather than judged by eye.
+        I build fast, secure web and iOS products, plus grounded AI tools. Currently a Software
+        Engineer Intern at MLock Innovations.
       </>
     ),
+  },
+  impact: {
+    display: true,
+    items: [
+      {
+        value: "45%",
+        label: "lower API latency at DigiValet",
+      },
+      {
+        value: "200+",
+        label: "automated tests at MLock Innovations",
+      },
+      {
+        value: "10",
+        label: "career roles mapped on Code Journey",
+        href: "/work/code-journey",
+      },
+      {
+        value: "92.9%",
+        label: "correct refusals on unanswerable questions in Grounded",
+        href: "/work/rag-chatbot",
+      },
+    ],
   },
   work: {
     display: true, // set to false to hide this section
@@ -137,16 +158,16 @@ const about: About = {
         role: "Software Engineer Intern",
         achievements: [
           <>
-            Built a multi-tenant IoT self-service platform end to end: three Next.js and TypeScript web apps on a Node.js, Express and PostgreSQL backend with 80+ REST endpoints.
+            <strong>80+ REST endpoints</strong> across a multi-tenant IoT self-service platform: three
+            Next.js and TypeScript apps on a Node.js, Express and PostgreSQL backend.
           </>,
           <>
-            Designed secure payment flows with server-side pricing, signature-verified webhooks and idempotent capture, preventing price tampering and duplicate charges.
+            <strong>200+ automated tests</strong> covering JWT authentication, role-based access
+            control and tenant isolation.
           </>,
           <>
-            Built a concurrency-safe job queue for connected devices using PostgreSQL row-level locking, with live status updates over WebSockets.
-          </>,
-          <>
-            Implemented JWT authentication, role-based access control and tenant isolation across admin dashboards, covered by 200+ automated tests.
+            <strong>Idempotent payment capture</strong> with server-side pricing and
+            signature-verified webhooks, closing price-tampering and duplicate-charge paths.
           </>,
         ],
         images: [],
@@ -157,16 +178,16 @@ const about: About = {
         role: "Software Engineer Intern",
         achievements: [
           <>
-            Architected a modular iOS SDK using MVVM and dependency injection, creating a reusable foundation for 5+ production screens and reducing feature integration time by 20%.
+            <strong>45% lower API latency</strong> (800 ms to 440 ms) through async networking,
+            request batching and caching.
           </>,
           <>
-            Reduced API latency by 45% (800 ms to 440 ms) through async/await networking, request batching, and intelligent caching.
+            <strong>25% lower crash rate</strong> (0.8% to 0.6%) from fixing memory leaks and retain
+            cycles.
           </>,
           <>
-            Improved app stability by 25% (0.8% to 0.6% crash rate) through memory leak fixes, retain cycle elimination, and state management improvements.
-          </>,
-          <>
-            Built a reusable SwiftUI component library with 15+ components to standardize UI patterns and accelerate feature delivery.
+            <strong>20% faster feature integration</strong> with a modular iOS SDK built on MVVM and
+            dependency injection.
           </>,
         ],
         images: [],
@@ -177,16 +198,16 @@ const about: About = {
         role: "Frontend Developer Intern",
         achievements: [
           <>
-            Led frontend performance optimization that reduced initial page load time by 25% (FCP 3.2 s to 2.4 s) through component restructuring, render tuning, and React memoization.
+            <strong>25% faster page loads</strong> (FCP 3.2 s to 2.4 s) through component
+            restructuring and React memoization.
           </>,
           <>
-            Built a real-time chatbot interface that handled concurrent sessions with under 500 ms latency using WebSocket-based state synchronization.
+            <strong>60% fewer redundant API calls</strong> with centralized Redux state and
+            request caching.
           </>,
           <>
-            Implemented Redux-based state management and memoization patterns that reduced redundant API calls by 60% and supported horizontal scaling for the frontend.
-          </>,
-          <>
-            Worked across frontend and backend integration to ship responsive, production-ready interfaces for a live product experience.
+            <strong>Under 500 ms</strong> response latency for a real-time WebSocket chatbot
+            handling concurrent sessions.
           </>,
         ],
         images: [],
@@ -213,63 +234,50 @@ const about: About = {
     skills: [
       {
         title: "Languages",
-        description: (
-          <>Core languages used for frontend, backend, and mobile development.</>
-        ),
         tags: [
-          { name: "JavaScript", icon: "" },
           { name: "TypeScript", icon: "" },
+          { name: "JavaScript", icon: "" },
           { name: "Python", icon: "" },
           { name: "Swift", icon: "" },
-          { name: "HTML", icon: "" },
-          { name: "CSS", icon: "" },
           { name: "SQL", icon: "" },
         ],
         images: [],
       },
       {
-        title: "Frameworks & Libraries",
-        description: (
-          <>Modern tools used to build responsive web and iOS applications.</>
-        ),
+        title: "Frontend & Mobile",
         tags: [
           { name: "React.js", icon: "" },
           { name: "Next.js", icon: "" },
           { name: "Redux", icon: "" },
+          { name: "SwiftUI", icon: "" },
+          { name: "Tailwind CSS", icon: "" },
+        ],
+        images: [],
+      },
+      {
+        title: "Backend & Data",
+        tags: [
           { name: "Node.js", icon: "" },
           { name: "Express.js", icon: "" },
-          { name: "SwiftUI", icon: "" },
-          { name: "UIKit", icon: "" },
-          { name: "Tailwind CSS", icon: "" },
-          { name: "MongoDB", icon: "" },
           { name: "PostgreSQL", icon: "" },
+          { name: "Redis", icon: "" },
+          { name: "Docker", icon: "" },
         ],
         images: [],
       },
       {
         title: "AI & LLMs",
-        description: (
-          <>Building grounded AI features: retrieval, structured outputs, and evaluation.</>
-        ),
         tags: [
           { name: "RAG", icon: "" },
-          { name: "Embeddings", icon: "" },
           { name: "Vector Search", icon: "" },
-          { name: "Chroma", icon: "" },
           { name: "LLM APIs", icon: "" },
           { name: "Ollama", icon: "" },
-          { name: "Structured Outputs", icon: "" },
-          { name: "Tool Calling", icon: "" },
-          { name: "Prompt Engineering", icon: "" },
           { name: "Evaluation Harnesses", icon: "" },
         ],
         images: [],
       },
       {
         title: "Tools & Platforms",
-        description: (
-          <>Development, deployment, and collaboration tools used in delivery.</>
-        ),
         tags: [
           { name: "Git / GitHub", icon: "" },
           { name: "Xcode", icon: "" },
@@ -281,26 +289,6 @@ const about: About = {
           { name: "Render", icon: "" },
           { name: "AWS S3", icon: "" },
           { name: "Jest", icon: "" },
-        ],
-        images: [],
-      },
-      {
-        title: "Core Concepts",
-        description: (
-          <>Practices and architectural patterns applied across product and platform work.</>
-        ),
-        tags: [
-          { name: "System Design", icon: "" },
-          { name: "REST APIs", icon: "" },
-          { name: "MVVM", icon: "" },
-          { name: "Performance Optimization", icon: "" },
-          { name: "Caching Strategies", icon: "" },
-          { name: "Responsive Design", icon: "" },
-          { name: "State Management", icon: "" },
-          { name: "RBAC & JWT Auth", icon: "" },
-          { name: "Multi-tenant Architecture", icon: "" },
-          { name: "Payment Integration", icon: "" },
-          { name: "Real-time Systems", icon: "" },
         ],
         images: [],
       },
