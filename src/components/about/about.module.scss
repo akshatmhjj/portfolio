@@ -17,3 +17,22 @@
         align-self: center;
     }
 }
+
+// On phones: name and role first, then the photo, then the rest of the content
+@media (max-width: breakpoints.$s) {
+    .content {
+        display: contents;
+    }
+
+    .content > * {
+        order: 2;
+    }
+
+    .hero {
+        order: 0;
+    }
+
+    .avatar {
+        order: 1;
+    }
+}

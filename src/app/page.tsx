@@ -116,9 +116,10 @@ export default function Home() {
             )}
           </Column>
         )}
-        <Column className={styles.blockAlign} flex={9} maxWidth={40}>
+        <Column className={`${styles.blockAlign} ${styles.content}`} flex={9} maxWidth={40}>
           <Column
             id={about.intro.title}
+            className={styles.hero}
             fillWidth
             minHeight="160"
             vertical="center"

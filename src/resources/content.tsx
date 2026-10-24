@@ -333,7 +333,7 @@ const about: About = {
 const work: Work = {
   path: "/work",
   label: "Work",
-  title: `Projects by ${person.name}`,
+  title: `Projects – ${person.name}`,
   description: `Design and dev projects by ${person.name}`,
   // Create new project pages by adding a new .mdx file to app/work/projects
   // All projects will be listed on the /work route
