@@ -1,16 +1,6 @@
-// import a pre-defined template for config and content options
-// we no longer expose `home` since the root route has been
-// detached; refer to `/about` as the homepage instead.
-export {
-  person,
-  social,
-  newsletter,
-  // home,
-  about,
-  blog,
-  work,
-  gallery,
-} from "./content";
+// Content and config options. `about` is the homepage ("/"),
+// `work` is the project list ("/work").
+export { person, social, newsletter, about, work } from "./content";
 
 export {
   display,

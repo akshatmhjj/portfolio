@@ -1,4 +1,4 @@
-import { About, Blog, Gallery, Newsletter, Person, Social, Work } from "@/types";
+import { About, Newsletter, Person, Social, Work } from "@/types";
 // `Home` and the Once UI helpers were previously used by the
 // now-commented-out `home` object; keeping the imports could trigger
 // unused‑symbol warnings so they've been removed. Re-add if you bring
@@ -8,7 +8,7 @@ const person: Person = {
   firstName: "Akshat",
   lastName: "Mahajan",
   name: `Akshat Mahajan`,
-  role: "Full Stack & iOS Engineer",
+  role: "Software Engineer",
   avatar: "/images/avatar.jpg",
   email: "akshatmahajan32@gmail.com",
   location: "Indore, India",
@@ -99,7 +99,7 @@ const home: Home = {
 const about: About = {
   path: "/",
   label: "About",
-  title: `About – ${person.name}`,
+  title: `${person.name} – ${person.role}`,
   description: `Meet ${person.name}, ${person.role} from ${person.location}`,
   tableOfContent: {
     display: true,
@@ -117,6 +117,9 @@ const about: About = {
     title: "Introduction",
     description: (
       <>
+        <strong>Open to full-time roles and relocation.</strong>
+        <br />
+        <br />
         I build full-stack web applications and iOS products with a focus on performance, maintainability, and clear user experience. My recent work has centered on scaling frontend systems, reducing API latency, improving app stability, and shipping reliable features with measurable impact.
         <br />
         <br />
@@ -151,7 +154,7 @@ const about: About = {
       {
         company: "DigiValet",
         timeframe: "Jan 2026 - Jun 2026",
-        role: "iOS Software Engineer",
+        role: "Software Engineer Intern",
         achievements: [
           <>
             Architected a modular iOS SDK using MVVM and dependency injection, creating a reusable foundation for 5+ production screens and reducing feature integration time by 20%.
@@ -171,7 +174,7 @@ const about: About = {
       {
         company: "Itigai Technologies",
         timeframe: "Aug 2025 - Oct 2025",
-        role: "Frontend Software Engineer",
+        role: "Frontend Developer Intern",
         achievements: [
           <>
             Led frontend performance optimization that reduced initial page load time by 25% (FCP 3.2 s to 2.4 s) through component restructuring, render tuning, and React memoization.
@@ -191,12 +194,12 @@ const about: About = {
     ],
   },
   studies: {
-    display: false, // set to false to hide this section
-    title: "Studies",
+    display: true, // set to false to hide this section
+    title: "Education",
     institutions: [
       {
-        name: "Shri Vaishnav Vidhyapeeth Vishwavidyalaya",
-        description: <>Bachelor Of Technology [CSE IBM-FSDB]</>,
+        name: "Shri Vaishnav Vidhyapeeth Vishwavidyalaya, Indore",
+        description: <>B.Tech in Computer Science Engineering, Aug 2022 – Jun 2026</>,
       },
       {
         name: "St. Arnold's Senior Secondary School",
@@ -339,73 +342,13 @@ const about: About = {
   },
 };
 
-const blog: Blog = {
-  path: "/blog",
-  label: "Blog",
-  title: "Writing about design and tech...",
-  description: `Read what ${person.name} has been up to recently`,
-  // Create new blog posts by adding a new .mdx file to app/blog/posts
-  // All posts will be listed on the /blog route
-};
-
 const work: Work = {
   path: "/work",
   label: "Work",
   title: `Projects by ${person.name}`,
   description: `Design and dev projects by ${person.name}`,
-  // Create new project pages by adding a new .mdx file to app/blog/posts
-  // All projects will be listed on the /home and /work routes
+  // Create new project pages by adding a new .mdx file to app/work/projects
+  // All projects will be listed on the /work route
 };
 
-const gallery: Gallery = {
-  path: "/gallery",
-  label: "Gallery",
-  title: `Photo gallery – ${person.name}`,
-  description: `A photo collection by ${person.name}`,
-  // Images by https://lorant.one
-  // These are placeholder images, replace with your own
-  images: [
-    {
-      src: "/images/gallery/horizontal-1.jpg",
-      alt: "image",
-      orientation: "horizontal",
-    },
-    {
-      src: "/images/gallery/vertical-4.jpg",
-      alt: "image",
-      orientation: "vertical",
-    },
-    {
-      src: "/images/gallery/horizontal-3.jpg",
-      alt: "image",
-      orientation: "horizontal",
-    },
-    {
-      src: "/images/gallery/vertical-1.jpg",
-      alt: "image",
-      orientation: "vertical",
-    },
-    {
-      src: "/images/gallery/vertical-2.jpg",
-      alt: "image",
-      orientation: "vertical",
-    },
-    {
-      src: "/images/gallery/horizontal-2.jpg",
-      alt: "image",
-      orientation: "horizontal",
-    },
-    {
-      src: "/images/gallery/horizontal-4.jpg",
-      alt: "image",
-      orientation: "horizontal",
-    },
-    {
-      src: "/images/gallery/vertical-3.jpg",
-      alt: "image",
-      orientation: "vertical",
-    },
-  ],
-};
-
-export { person, social, newsletter, about, blog, work, gallery };
+export { person, social, newsletter, about, work };

@@ -13,26 +13,17 @@ import {
 } from "@/types";
 // we don't export `home` any more; metadata will be based on the
 // about page content instead.
-import { about } from "./index";
+import { about, person } from "./index";
 
 // IMPORTANT: Replace with your own domain address - it's used for SEO in meta tags and schema
-const baseURL: string = "https://demo.magic-portfolio.com";
+const baseURL: string = "https://akshatmajan.in";
 
-// The home route is technically disabled in the UI, but we still
-// allow the path to exist so that the redirect component can run.
-// `RouteGuard` checks this map and will show a 404 when a route is
-// false; setting "/" to true lets us redirect to `/about` instead of
-// bouncing to a NotFound page.
+// `RouteGuard` checks this map and shows a 404 for any path that is
+// missing or set to false. "/" is the About page (the homepage) and
+// "/work" lists all projects.
 const routes: RoutesConfig = {
-  // keep the root entry so the home redirect continues to work
   "/": true,
-  "/about": true,
   "/work": true,
-
-  // other sections are temporarily disabled while focusing on
-  // about+work
-  "/blog": false,
-  "/gallery": false,
 };
 
 const display: DisplayConfig = {
@@ -196,18 +187,16 @@ const mailchimp: MailchimpConfig = {
 // default schema data
 const schema: SchemaConfig = {
   logo: "",
-  type: "Organization",
-  name: "Once UI",
-  // fall back to the about description now that home no longer exists
+  type: "Person",
+  name: person.name,
   description: about.description,
-  email: "lorant@once-ui.com",
+  email: person.email,
 };
 
 // social links
 const sameAs: SameAsConfig = {
-  threads: "https://www.threads.com/@once_ui",
-  linkedin: "https://www.linkedin.com/company/once-ui/",
-  discord: "https://discord.com/invite/5EyAQ4eNdS",
+  github: "https://github.com/akshatmhjj",
+  linkedin: "https://www.linkedin.com/in/akshatmhjj/",
 };
 
 // social sharing configuration for blog posts
