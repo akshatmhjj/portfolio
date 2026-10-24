@@ -14,6 +14,7 @@ import {
   Row,
   Avatar,
   Line,
+  Tag,
 } from "@once-ui-system/core";
 import { baseURL, about, person, work } from "@/resources";
 import { formatDate } from "@/utils/formatDate";
@@ -100,52 +101,81 @@ export default async function Project({
           {post.metadata.publishedAt && formatDate(post.metadata.publishedAt)}
         </Text> */}
         <Heading variant="display-strong-m">{post.metadata.title}</Heading>
-      </Column>
-      {post.metadata.versions && post.metadata.versions.length > 0 && (
-        <Row gap="8" vertical="center" horizontal="center" wrap marginBottom="24">
-          {post.metadata.versions.map((version, index) => (
-            <div key={version.label}>
-              <SmartLink href={version.link} target="_blank">
-                <Text
-                  as="span"
-                  variant="label-default-s"
-                  onBackground="brand-weak"
-                >
-                  {version.label} · {version.name}
-                </Text>
-              </SmartLink>
-              {index < post.metadata.versions!.length - 1 && (
-                <Text
-                  as="span"
-                  variant="body-default-s"
-                  onBackground="neutral-weak"
-                >
-                  {" · "}
-                </Text>
-              )}
-            </div>
-          ))}
-        </Row>
-      )}
-      <Row marginBottom="32" horizontal="center">
-        <Row gap="16" vertical="center">
-          {post.metadata.team && <AvatarGroup reverse avatars={avatars} size="s" />}
-          <Text variant="label-default-m" onBackground="brand-weak">
-            {post.metadata.team?.map((member, idx) => (
-              <span key={idx}>
-                {idx > 0 && (
-                  <Text as="span" onBackground="neutral-weak">
-                    ,{" "}
+        {post.metadata.versions && post.metadata.versions.length > 0 && (
+          <Row gap="8" vertical="center" horizontal="center" wrap>
+            {post.metadata.versions.map((version, index) => (
+              <div key={version.label}>
+                <SmartLink href={version.link} target="_blank">
+                  <Text
+                    as="span"
+                    variant="label-default-s"
+                    onBackground="brand-weak"
+                  >
+                    {version.label} · {version.name}
+                  </Text>
+                </SmartLink>
+                {index < post.metadata.versions!.length - 1 && (
+                  <Text
+                    as="span"
+                    variant="body-default-s"
+                    onBackground="neutral-weak"
+                  >
+                    {" · "}
                   </Text>
                 )}
-                <SmartLink href={member.linkedIn}>{member.name}</SmartLink>
-              </span>
+              </div>
             ))}
-          </Text>
-        </Row>
-      </Row>
-      {post.metadata.images.length > 0 && (
-        <Media priority aspectRatio="16 / 9" radius="m" alt="image" src={post.metadata.images[0]} />
+          </Row>
+        )}
+        {post.metadata.team && post.metadata.team.length > 0 && (
+          <Row gap="16" vertical="center" horizontal="center">
+            {post.metadata.team && <AvatarGroup reverse avatars={avatars} size="s" />}
+            <Text variant="label-default-m" onBackground="brand-weak">
+              {post.metadata.team?.map((member, idx) => (
+                <span key={idx}>
+                  {idx > 0 && (
+                    <Text as="span" onBackground="neutral-weak">
+                      ,{" "}
+                    </Text>
+                  )}
+                  <SmartLink href={member.linkedIn}>{member.name}</SmartLink>
+                </span>
+              ))}
+            </Text>
+          </Row>
+        )}
+        {post.metadata.metrics && post.metadata.metrics.length > 0 && (
+          <Column gap="16" horizontal="center" align="center">
+            <Row gap="32" wrap horizontal="center">
+              {post.metadata.metrics.map((metric) => (
+                <Column key={metric.label} gap="4" horizontal="center" align="center">
+                  <Text variant="heading-strong-l">{metric.value}</Text>
+                  <Text variant="body-default-xs" onBackground="neutral-weak">
+                    {metric.label}
+                  </Text>
+                </Column>
+              ))}
+            </Row>
+            {post.metadata.stack && post.metadata.stack.length > 0 && (
+              <Row gap="8" wrap horizontal="center">
+                {post.metadata.stack.map((tech) => (
+                  <Tag key={tech} size="s">
+                    {tech}
+                  </Tag>
+                ))}
+              </Row>
+            )}
+          </Column>
+        )}
+      </Column>
+      {(post.metadata.image || post.metadata.images.length > 0) && (
+        <Media
+          priority
+          aspectRatio="16 / 9"
+          radius="m"
+          alt={`${post.metadata.title} screenshot`}
+          src={post.metadata.image || post.metadata.images[0]}
+        />
       )}
       <Column style={{ margin: "auto" }} as="article" maxWidth="xs">
         <CustomMDX source={post.content} />
