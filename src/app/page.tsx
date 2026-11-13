@@ -1,23 +1,8 @@
-import {
-  // bread, cylentro, salt, capsicum, fruits, vegetables, tomatos, cookies, yogurt, 
-  Avatar,
-  Button,
-  Column,
-  Heading,
-  Icon,
-  IconButton,
-  Media,
-  Tag,
-  Text,
-  Meta,
-  Schema,
-  Row,
-  SmartLink,
-} from "@once-ui-system/core";
+import { Meta, Schema } from "@once-ui-system/core";
 import { baseURL, about, person, social } from "@/resources";
-import TableOfContents from "@/components/about/TableOfContents";
-import styles from "@/components/about/about.module.scss";
-import React from "react";
+import { getPosts } from "@/utils/utils";
+import RequestSite from "@/components/request/RequestSite";
+import type { ProjectData } from "@/components/request/types";
 
 export async function generateMetadata() {
   return Meta.generate({
@@ -29,36 +14,32 @@ export async function generateMetadata() {
   });
 }
 
+// Projects come straight from the MDX files in src/app/work/projects,
+// so adding/editing a project there updates this page too.
+function loadProjects(): ProjectData[] {
+  return getPosts(["src", "app", "work", "projects"])
+    .sort((a, b) => {
+      const oa = a.metadata.order ?? Number.MAX_SAFE_INTEGER;
+      const ob = b.metadata.order ?? Number.MAX_SAFE_INTEGER;
+      if (oa !== ob) return oa - ob;
+      return new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime();
+    })
+    .map((p) => ({
+      slug: p.slug,
+      title: p.metadata.title,
+      summary: p.metadata.summary,
+      image: p.metadata.image || p.metadata.images[0] || "",
+      link: p.metadata.link || "",
+      source: p.metadata.source || "",
+      stack: p.metadata.stack || [],
+      metrics: p.metadata.metrics || [],
+      year: new Date(p.metadata.publishedAt).getFullYear(),
+    }));
+}
+
 export default function Home() {
-  const structure = [
-    {
-      title: about.intro.title,
-      display: about.intro.display,
-      items: [],
-    },
-    {
-      title: about.work.title,
-      display: about.work.display,
-      items: about.work.experiences.map((experience) => experience.company),
-    },
-    {
-      title: about.technical.title,
-      display: about.technical.display,
-      items: about.technical.skills.map((skill) => skill.title),
-    },
-    {
-      title: about.studies.title,
-      display: about.studies.display,
-      items: about.studies.institutions.map((institution) => institution.name),
-    },
-    {
-      title: about.certifications.title,
-      display: about.certifications.display,
-      items: about.certifications.items.map((certification) => certification.name),
-    },
-  ];
   return (
-    <Column maxWidth="m">
+    <>
       <Schema
         as="webPage"
         baseURL={baseURL}
@@ -72,361 +53,19 @@ export default function Home() {
           image: `${baseURL}${person.avatar}`,
         }}
       />
-      {about.tableOfContent.display && (
-        <Column
-          left="0"
-          style={{ top: "50%", transform: "translateY(-50%)" }}
-          position="fixed"
-          paddingLeft="24"
-          gap="32"
-          s={{ hide: true }}
-        >
-          <TableOfContents structure={structure} about={about} />
-        </Column>
-      )}
-      <Row fillWidth s={{ direction: "column" }} horizontal="center">
-        {about.avatar.display && (
-          <Column
-            className={styles.avatar}
-            top="64"
-            fitHeight
-            position="sticky"
-            s={{ position: "relative", style: { top: "auto" } }}
-            xs={{ style: { top: "auto" } }}
-            minWidth="160"
-            paddingX="l"
-            paddingBottom="xl"
-            gap="m"
-            flex={3}
-            horizontal="center"
-          >
-            <Avatar src={person.avatar} size="xl" />
-            <Row gap="8" vertical="center">
-              <Icon onBackground="accent-weak" name="globe" />
-              {person.location}
-            </Row>
-            {person.languages && person.languages.length > 0 && (
-              <Row wrap gap="8">
-                {person.languages.map((language, index) => (
-                  <Tag key={index} size="l">
-                    {language}
-                  </Tag>
-                ))}
-              </Row>
-            )}
-          </Column>
-        )}
-        <Column className={`${styles.blockAlign} ${styles.content}`} flex={9} maxWidth={40}>
-          <Column
-            id={about.intro.title}
-            className={styles.hero}
-            fillWidth
-            minHeight="160"
-            vertical="center"
-            marginBottom="32"
-          >
-            {/* {about.calendar.display && (
-              <Row
-                fitWidth
-                border="brand-alpha-medium"
-                background="brand-alpha-weak"
-                radius="full"
-                padding="4"
-                gap="8"
-                marginBottom="m"
-                vertical="center"
-                className={styles.blockAlign}
-                style={{
-                  backdropFilter: "blur(var(--static-space-1))",
-                }}
-              >
-                <Icon paddingLeft="12" name="calendar" onBackground="brand-weak" />
-                <Row paddingX="8">Schedule a call</Row>
-                <IconButton
-                  href={about.calendar.link}
-                  data-border="rounded"
-                  variant="secondary"
-                  icon="chevronRight"
-                />
-              </Row>
-            )} */}
-            <Heading className={styles.textAlign} variant="display-strong-xl">
-              {person.name}
-            </Heading>
-            <Text
-              className={styles.textAlign}
-              variant="display-default-xs"
-              onBackground="neutral-weak"
-            >
-              {person.role}
-            </Text>
-            {social.length > 0 && (
-              <Row
-                className={styles.blockAlign}
-                paddingTop="20"
-                paddingBottom="8"
-                gap="8"
-                wrap
-                horizontal="center"
-                fitWidth
-                data-border="rounded"
-              >
-                {social
-                  .filter((item) => item.essential)
-                  .map(
-                    (item) =>
-                      item.link && (
-                        <React.Fragment key={item.name}>
-                          <Row s={{ hide: true }}>
-                            <Button
-                              key={item.name}
-                              href={item.link}
-                              prefixIcon={item.icon}
-                              label={item.name}
-                              size="s"
-                              weight="default"
-                              variant="secondary"
-                            />
-                          </Row>
-                          <Row hide s={{ hide: false }}>
-                            <IconButton
-                              size="l"
-                              key={`${item.name}-icon`}
-                              href={item.link}
-                              icon={item.icon}
-                              variant="secondary"
-                            />
-                          </Row>
-                        </React.Fragment>
-                      ),
-                  )}
-              </Row>
-            )}
-          </Column>
-
-          {about.intro.display && (
-            <Column textVariant="body-default-l" fillWidth gap="m" marginBottom="l">
-              <div>{about.intro.description}</div>
-              <Row gap="8" wrap paddingTop="8">
-                <Button
-                  href={`mailto:${person.email}`}
-                  prefixIcon="email"
-                  label="Email me"
-                  size="m"
-                  variant="primary"
-                />
-                <Button
-                  href="/Akshat Mahajan Resume.pdf"
-                  target="_blank"
-                  prefixIcon="download"
-                  label="View resume"
-                  size="m"
-                  variant="secondary"
-                />
-              </Row>
-            </Column>
-          )}
-
-          {about.impact.display && (
-            <Row fillWidth wrap gap="24">
-              {about.impact.items.map((item) => {
-                const stat = (
-                  <Column gap="4" fillWidth>
-                    <Heading variant="display-strong-s">{item.value}</Heading>
-                    <Text variant="body-default-s" onBackground="neutral-weak">
-                      {item.label}
-                    </Text>
-                  </Column>
-                );
-                return item.href ? (
-                  <SmartLink
-                    key={item.label}
-                    href={item.href}
-                    style={{ flex: "1 1 160px", textDecoration: "none" }}
-                  >
-                    {stat}
-                  </SmartLink>
-                ) : (
-                  <Column key={item.label} style={{ flex: "1 1 160px" }}>
-                    {stat}
-                  </Column>
-                );
-              })}
-            </Row>
-          )}
-
-          {about.work.display && (
-            <>
-              <Heading as="h2" id={about.work.title} variant="display-strong-s" marginTop="40" marginBottom="m">
-                {about.work.title}
-              </Heading>
-              <Column fillWidth gap="l">
-                {about.work.experiences.map((experience, index) => (
-                  <Column key={`${experience.company}-${experience.role}-${index}`} fillWidth>
-                    <Row fillWidth horizontal="between" vertical="end" marginBottom="4">
-                      <Text id={experience.company} variant="heading-strong-l">
-                        {experience.company}
-                      </Text>
-                      <Text variant="heading-default-xs" onBackground="neutral-weak">
-                        {experience.timeframe}
-                      </Text>
-                    </Row>
-                    <Text variant="body-default-s" onBackground="brand-weak" marginBottom="m">
-                      {experience.role}
-                    </Text>
-                    <Column as="ul" gap="16">
-                      {experience.achievements.map(
-                        (achievement: React.ReactNode, index: number) => (
-                          <Text
-                            as="li"
-                            variant="body-default-m"
-                            key={`${experience.company}-${index}`}
-                          >
-                            {achievement}
-                          </Text>
-                        ),
-                      )}
-                    </Column>
-                    {experience.images && experience.images.length > 0 && (
-                      <Row fillWidth paddingTop="m" paddingLeft="40" gap="12" wrap>
-                        {experience.images.map((image, index) => (
-                          <Row
-                            key={index}
-                            border="neutral-medium"
-                            radius="m"
-                            minWidth={image.width}
-                            height={image.height}
-                          >
-                            <Media
-                              enlarge
-                              radius="m"
-                              sizes={image.width.toString()}
-                              alt={image.alt}
-                              src={image.src}
-                            />
-                          </Row>
-                        ))}
-                      </Row>
-                    )}
-                  </Column>
-                ))}
-              </Column>
-            </>
-          )}
-
-          {about.technical.display && (
-            <>
-              <Heading
-                as="h2"
-                id={about.technical.title}
-                variant="display-strong-s"
-                marginTop="40"
-                marginBottom="m"
-              >
-                {about.technical.title}
-              </Heading>
-              <Column fillWidth gap="l">
-                {about.technical.skills.map((skill, index) => (
-                  <Column key={`${skill}-${index}`} fillWidth gap="4">
-                    <Text id={skill.title} variant="heading-strong-l">
-                      {skill.title}
-                    </Text>
-                    {skill.description && (
-                      <Text variant="body-default-m" onBackground="neutral-weak">
-                        {skill.description}
-                      </Text>
-                    )}
-                    {skill.tags && skill.tags.length > 0 && (
-                      <Row wrap gap="8" paddingTop="8">
-                        {skill.tags.map((tag, tagIndex) => (
-                          <Tag key={`${skill.title}-${tagIndex}`} size="l" prefixIcon={tag.icon}>
-                            {tag.name}
-                          </Tag>
-                        ))}
-                      </Row>
-                    )}
-                    {skill.images && skill.images.length > 0 && (
-                      <Row fillWidth paddingTop="m" gap="12" wrap>
-                        {skill.images.map((image, index) => (
-                          <Row
-                            key={index}
-                            border="neutral-medium"
-                            radius="m"
-                            minWidth={image.width}
-                            height={image.height}
-                          >
-                            <Media
-                              enlarge
-                              radius="m"
-                              sizes={image.width.toString()}
-                              alt={image.alt}
-                              src={image.src}
-                            />
-                          </Row>
-                        ))}
-                      </Row>
-                    )}
-                  </Column>
-                ))}
-              </Column>
-            </>
-          )}
-
-          {about.studies.display && (
-            <>
-              <Heading
-                as="h2"
-                id={about.studies.title}
-                variant="display-strong-s"
-                marginTop="40"
-                marginBottom="m"
-              >
-                {about.studies.title}
-              </Heading>
-              <Column fillWidth gap="l">
-                {about.studies.institutions.map((institution, index) => (
-                  <Column key={`${institution.name}-${index}`} fillWidth gap="4">
-                    <Text id={institution.name} variant="heading-strong-l">
-                      {institution.name}
-                    </Text>
-                    <Text variant="heading-default-xs" onBackground="neutral-weak">
-                      {institution.description}
-                    </Text>
-                  </Column>
-                ))}
-              </Column>
-            </>
-          )}
-
-          {about.certifications.display && (
-            <>
-              <Heading
-                as="h2"
-                id={about.certifications.title}
-                variant="display-strong-s"
-                marginTop="40"
-                marginBottom="m"
-              >
-                {about.certifications.title}
-              </Heading>
-              <Column fillWidth gap="m">
-                {about.certifications.items.map((certification, index) => (
-                  <Text
-                    as="a"
-                    href={certification.link}
-                    target="_blank"
-                    rel="noreferrer"
-                    key={`${certification.name}-${index}`}
-                    variant="body-default-m"
-                  >
-                    {certification.name}
-                  </Text>
-                ))}
-              </Column>
-            </>
-          )}
-        </Column>
-      </Row>
-    </Column>
+      <RequestSite
+        person={{
+          name: person.name,
+          role: person.role,
+          email: person.email,
+          location: person.location,
+          languages: person.languages ?? [],
+          avatar: person.avatar,
+        }}
+        social={social.map((s) => ({ name: s.name, link: s.link }))}
+        projects={loadProjects()}
+        resumeHref={encodeURI("/Akshat Mahajan Resume.pdf")}
+      />
+    </>
   );
 }
