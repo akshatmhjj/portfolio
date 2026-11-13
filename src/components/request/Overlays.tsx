@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { PROJECT_META } from "./data";
-import { MetricValue } from "./ui";
 import type { ProjectData } from "./types";
 
 /* ---------------------------- case-study drawer ---------------------------- */
@@ -28,8 +27,6 @@ export function Drawer({ project, onClose }: { project: ProjectData | null; onCl
             <p className="lede" style={{ marginBottom: 20 }}>
               {project.summary}
             </p>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className="cover" style={{ borderRadius: 14, marginBottom: 20 }} src={project.image} alt={project.title} />
             <div className="mx" style={{ marginTop: 0 }}>
               {project.metrics.slice(0, 3).map((m) => (
                 <div className="m" key={m.label}>

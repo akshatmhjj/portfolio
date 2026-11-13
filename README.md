@@ -1,6 +1,6 @@
 # Akshat Mahajan – Portfolio
 
-Personal portfolio at [akshatmajan.in](https://akshatmajan.in).
+Personal portfolio at [akshatmahajan.in](https://www.akshatmahajan.in).
 
 - `/` – About, experience, education, skills and certifications
 - `/work` – Projects, each with a case study page at `/work/<slug>`

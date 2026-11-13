@@ -4,11 +4,13 @@ import type { ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { Flex } from "@once-ui-system/core";
 import { RouteGuard } from "@/components/RouteGuard";
+import { routes } from "@/resources";
 
 /**
  * Decides which chrome wraps a page.
- *  - "/"  → the full-bleed "Request" UI renders on its own (no Once UI header/footer/background).
- *  - else → the classic layout (background, header, padded content, footer) used by /work pages.
+ *  - "/" and "/work/*" → the full-bleed "Request" UI renders on its own (it brings its own header/footer).
+ *  - everything else   → the classic layout (background, header, padded content, footer).
+ * A route switched off in `routes` falls through to the classic layout so RouteGuard can show the 404.
  */
 export function Shell({
   background,
@@ -21,9 +23,11 @@ export function Shell({
   footer: ReactNode;
   children: ReactNode;
 }) {
-  const pathname = usePathname();
+  const pathname = usePathname() ?? "";
+  const requestUi =
+    (pathname === "/" && routes["/"]) || (pathname.startsWith("/work") && routes["/work"]);
 
-  if (pathname === "/") return <>{children}</>;
+  if (requestUi) return <>{children}</>;
 
   return (
     <>

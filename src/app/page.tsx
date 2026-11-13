@@ -1,15 +1,23 @@
 import { Meta, Schema } from "@once-ui-system/core";
 import { baseURL, about, person, social } from "@/resources";
-import { getPosts } from "@/utils/utils";
+import { getSortedPosts } from "@/components/request/projects";
+import { ogUrl } from "@/components/request/og";
 import RequestSite from "@/components/request/RequestSite";
 import type { ProjectData } from "@/components/request/types";
+
+// Link-preview image for the home page (matches the site's design).
+const homeOg = ogUrl({
+  kind: "home",
+  title: person.name,
+  sub: "Software engineer. Fast web & iOS, and AI that cites its sources or refuses.",
+});
 
 export async function generateMetadata() {
   return Meta.generate({
     title: about.title,
     description: about.description,
     baseURL: baseURL,
-    image: `/api/og/generate?title=${encodeURIComponent(about.title)}`,
+    image: homeOg,
     path: about.path,
   });
 }
@@ -17,13 +25,7 @@ export async function generateMetadata() {
 // Projects come straight from the MDX files in src/app/work/projects,
 // so adding/editing a project there updates this page too.
 function loadProjects(): ProjectData[] {
-  return getPosts(["src", "app", "work", "projects"])
-    .sort((a, b) => {
-      const oa = a.metadata.order ?? Number.MAX_SAFE_INTEGER;
-      const ob = b.metadata.order ?? Number.MAX_SAFE_INTEGER;
-      if (oa !== ob) return oa - ob;
-      return new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime();
-    })
+  return getSortedPosts()
     .map((p) => ({
       slug: p.slug,
       title: p.metadata.title,
@@ -46,7 +48,7 @@ export default function Home() {
         title={about.title}
         description={about.description}
         path={about.path}
-        image={`/api/og/generate?title=${encodeURIComponent(about.title)}`}
+        image={homeOg}
         author={{
           name: person.name,
           url: `${baseURL}${about.path}`,

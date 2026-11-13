@@ -16,7 +16,7 @@ import {
 import { about, person } from "./index";
 
 // IMPORTANT: Replace with your own domain address - it's used for SEO in meta tags and schema
-const baseURL: string = "https://akshatmajan.in";
+const baseURL: string = "https://www.akshatmahajan.in";
 
 // `RouteGuard` checks this map and shows a 404 for any path that is
 // missing or set to false. "/" is the About page (the homepage) and

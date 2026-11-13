@@ -3,7 +3,7 @@
 import "./request.css";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties } from "react";
-import { useTheme } from "@once-ui-system/core";
+import { PageNav, useThemeToggle } from "./Chrome";
 import { rqFontClasses } from "./fonts";
 import {
   API_CARD,
@@ -46,10 +46,6 @@ function ProjectCard({ p, onOpen }: { p: ProjectData; onOpen: () => void }) {
   const meta = PROJECT_META[p.slug];
   return (
     <Rv as="article" className="card" id={`p-${p.slug}`}>
-      <div className="cardimg">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="cover" src={p.image} alt={`${p.title} cover`} loading="lazy" />
-      </div>
       <div className="ch">
         <div>
           <h3>{p.title}</h3>
@@ -101,8 +97,7 @@ function ProjectCard({ p, onOpen }: { p: ProjectData; onOpen: () => void }) {
 }
 
 export default function RequestSite({ person, social, projects, resumeHref }: SiteProps) {
-  const { setTheme } = useTheme();
-  const [dark, setDark] = useState(true);
+  const { dark, toggle: toggleTheme } = useThemeToggle();
   const [wi, setWi] = useState(0);
   const [wordClass, setWordClass] = useState("");
   const [proofOn, setProofOn] = useState(true);
@@ -114,16 +109,6 @@ export default function RequestSite({ person, social, projects, resumeHref }: Si
 
   const layerProjects = (layer: Layer) =>
     projects.filter((p) => (PROJECT_META[p.slug]?.layer ?? "data") === layer);
-
-  /* theme: follow the site-wide data-theme attribute (shared with the classic UI) */
-  useEffect(() => {
-    const read = () => setDark(document.documentElement.getAttribute("data-theme") !== "light");
-    read();
-    const mo = new MutationObserver(read);
-    mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
-    return () => mo.disconnect();
-  }, []);
-  const toggleTheme = () => setTheme(dark ? "light" : "dark");
 
   /* cycling headline word */
   useEffect(() => {
@@ -256,6 +241,7 @@ export default function RequestSite({ person, social, projects, resumeHref }: Si
             <i />
             <span>{active >= 0 ? SECTIONS[active].label : "hero"}</span>
           </div>
+          <PageNav hideOnMobile />
           <button className="tbtn" onClick={toggleTheme} aria-label={`Switch to ${dark ? "light" : "dark"} theme`}>
             <SunMoon dark={dark} />
           </button>
@@ -466,16 +452,6 @@ export default function RequestSite({ person, social, projects, resumeHref }: Si
           <span>trace complete · 200 OK</span>
         </footer>
       </div>
-
-      <button className="cmd" onClick={() => setPalette(true)} aria-label="Open command palette">
-        <span className="segs">
-          {SECTIONS.map((s, i) => (
-            <i key={s.id} className={i <= active ? "on" : ""} style={cssVar({ "--sc": COLORS[i] })} />
-          ))}
-        </span>
-        <span>Jump to…</span>
-        <kbd>⌘K</kbd>
-      </button>
 
       <div className={`scrim ${drawer || palette ? "on" : ""}`} onClick={closeAll} />
       <Palette open={palette} items={items} onClose={() => setPalette(false)} />

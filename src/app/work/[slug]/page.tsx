@@ -1,32 +1,42 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPosts } from "@/utils/utils";
-import {
-  Meta,
-  Schema,
-  AvatarGroup,
-  Button,
-  Column,
-  Flex,
-  Heading,
-  Media,
-  Text,
-  SmartLink,
-  Row,
-  Avatar,
-  Line,
-  Tag,
-} from "@once-ui-system/core";
-import { baseURL, about, person, work } from "@/resources";
-import { formatDate } from "@/utils/formatDate";
-import { ScrollToHash, CustomMDX } from "@/components";
+import { Meta, Schema } from "@once-ui-system/core";
 import { Metadata } from "next";
-import { Projects } from "@/components/work/Projects";
+import { baseURL, about, person, work } from "@/resources";
+import { RqPage } from "@/components/request/PageShell";
+import { Prose } from "@/components/request/Prose";
+import { Toc } from "@/components/request/Chrome";
+import { getHeadings } from "@/components/request/slug";
+import { getSortedPosts, projectAccent } from "@/components/request/projects";
+import { PROJECT_META } from "@/components/request/data";
+import { MetricValue, Rv } from "@/components/request/ui";
+import { ProjectArt } from "@/components/request/ProjectArt";
+import { ogUrl, projectAccentHex } from "@/components/request/og";
+import { ScrollToHash } from "@/components";
 
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
-  const posts = getPosts(["src", "app", "work", "projects"]);
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
+  return getSortedPosts().map((post) => ({ slug: post.slug }));
+}
+
+async function findPost(params: Promise<{ slug: string | string[] }>) {
+  const routeParams = await params;
+  const slugPath = Array.isArray(routeParams.slug) ? routeParams.slug.join("/") : routeParams.slug || "";
+  const posts = getSortedPosts();
+  const index = posts.findIndex((p) => p.slug === slugPath);
+  return { posts, index, post: index >= 0 ? posts[index] : undefined };
+}
+
+// Link-preview image for a project: title, summary, headline metrics, in the project's layer colour.
+function projectOg(post: NonNullable<Awaited<ReturnType<typeof findPost>>["post"]>) {
+  const m = post.metadata;
+  return ogUrl({
+    kind: "project",
+    title: m.title,
+    sub: m.summary,
+    accent: projectAccentHex(PROJECT_META[post.slug]?.layer),
+    tag: `project · ${new Date(m.publishedAt).getFullYear()}`,
+    stats: m.metrics,
+  });
 }
 
 export async function generateMetadata({
@@ -34,160 +44,152 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string | string[] }>;
 }): Promise<Metadata> {
-  const routeParams = await params;
-  const slugPath = Array.isArray(routeParams.slug)
-    ? routeParams.slug.join("/")
-    : routeParams.slug || "";
-
-  const posts = getPosts(["src", "app", "work", "projects"]);
-  let post = posts.find((post) => post.slug === slugPath);
-
+  const { post } = await findPost(params);
   if (!post) return {};
 
   return Meta.generate({
     title: `${post.metadata.title} – ${person.name}`,
     description: post.metadata.summary,
     baseURL: baseURL,
-    image: post.metadata.image || `/api/og/generate?title=${post.metadata.title}`,
+    image: projectOg(post),
     path: `${work.path}/${post.slug}`,
   });
 }
 
-export default async function Project({
-  params,
-}: {
-  params: Promise<{ slug: string | string[] }>;
-}) {
-  const routeParams = await params;
-  const slugPath = Array.isArray(routeParams.slug)
-    ? routeParams.slug.join("/")
-    : routeParams.slug || "";
+export default async function Project({ params }: { params: Promise<{ slug: string | string[] }> }) {
+  const { posts, index, post } = await findPost(params);
+  if (!post) notFound();
 
-  let post = getPosts(["src", "app", "work", "projects"]).find((post) => post.slug === slugPath);
-
-  if (!post) {
-    notFound();
-  }
-
-  const avatars =
-    post.metadata.team?.map((person) => ({
-      src: person.avatar,
-    })) || [];
+  const m = post.metadata;
+  const meta = PROJECT_META[post.slug];
+  const accent = projectAccent(post.slug);
+  const headings = getHeadings(post.content);
+  const next = posts[(index + 1) % posts.length];
+  const prev = posts[(index - 1 + posts.length) % posts.length];
+  const cover = m.image || m.images[0];
 
   return (
-    <Column as="section" maxWidth="m" horizontal="center" gap="l">
+    <RqPage accent={accent}>
       <Schema
         as="blogPosting"
         baseURL={baseURL}
         path={`${work.path}/${post.slug}`}
-        title={post.metadata.title}
-        description={post.metadata.summary}
-        datePublished={post.metadata.publishedAt}
-        dateModified={post.metadata.publishedAt}
-        image={
-          post.metadata.image || `/api/og/generate?title=${encodeURIComponent(post.metadata.title)}`
-        }
+        title={m.title}
+        description={m.summary}
+        datePublished={m.publishedAt}
+        dateModified={m.publishedAt}
+        image={projectOg(post)}
         author={{
           name: person.name,
           url: `${baseURL}${about.path}`,
           image: `${baseURL}${person.avatar}`,
         }}
       />
-      <Column maxWidth="s" gap="16" horizontal="center" align="center">
-        <SmartLink href="/work">
-          <Text variant="label-strong-m">Projects</Text>
-        </SmartLink>
-        {/* <Text variant="body-default-xs" onBackground="neutral-weak" marginBottom="12">
-          {post.metadata.publishedAt && formatDate(post.metadata.publishedAt)}
-        </Text> */}
-        <Heading variant="display-strong-m">{post.metadata.title}</Heading>
-        {post.metadata.versions && post.metadata.versions.length > 0 && (
-          <Row gap="8" vertical="center" horizontal="center" wrap>
-            {post.metadata.versions.map((version, index) => (
-              <div key={version.label}>
-                <SmartLink href={version.link} target="_blank">
-                  <Text
-                    as="span"
-                    variant="label-default-s"
-                    onBackground="brand-weak"
-                  >
-                    {version.label} · {version.name}
-                  </Text>
-                </SmartLink>
-                {index < post.metadata.versions!.length - 1 && (
-                  <Text
-                    as="span"
-                    variant="body-default-s"
-                    onBackground="neutral-weak"
-                  >
-                    {" · "}
-                  </Text>
-                )}
-              </div>
+
+      <section className="dt-top">
+        <Link href="/work" className="back mono">
+          ← all work
+        </Link>
+        <div className="dt-meta">
+          <span className="mono">PROJECT · {new Date(m.publishedAt).getFullYear()}</span>
+          {meta && (
+            <span className="badge" style={{ "--bd": meta.badgeColor } as React.CSSProperties}>
+              {meta.badge}
+            </span>
+          )}
+          {meta && <span className="role">{meta.role}</span>}
+        </div>
+        <Rv as="h1" className="h1 dt-title">
+          {m.title}
+        </Rv>
+        <Rv as="p" className="lede dt-lede" delay={0.08}>
+          {m.summary}
+        </Rv>
+
+        {m.versions && m.versions.length > 0 && (
+          <div className="vers">
+            {m.versions.map((v) => (
+              <a key={v.label} href={v.link} target="_blank" rel="noopener noreferrer" className="chip">
+                <b>{v.label}</b> {v.name} ↗
+              </a>
             ))}
-          </Row>
+          </div>
         )}
-        {post.metadata.team && post.metadata.team.length > 0 && (
-          <Row gap="16" vertical="center" horizontal="center">
-            {post.metadata.team && <AvatarGroup reverse avatars={avatars} size="s" />}
-            <Text variant="label-default-m" onBackground="brand-weak">
-              {post.metadata.team?.map((member, idx) => (
-                <span key={idx}>
-                  {idx > 0 && (
-                    <Text as="span" onBackground="neutral-weak">
-                      ,{" "}
-                    </Text>
-                  )}
-                  <SmartLink href={member.linkedIn}>{member.name}</SmartLink>
-                </span>
-              ))}
-            </Text>
-          </Row>
-        )}
-        {post.metadata.metrics && post.metadata.metrics.length > 0 && (
-          <Column gap="16" horizontal="center" align="center">
-            <Row gap="32" wrap horizontal="center">
-              {post.metadata.metrics.map((metric) => (
-                <Column key={metric.label} gap="4" horizontal="center" align="center">
-                  <Text variant="heading-strong-l">{metric.value}</Text>
-                  <Text variant="body-default-xs" onBackground="neutral-weak">
-                    {metric.label}
-                  </Text>
-                </Column>
-              ))}
-            </Row>
-            {post.metadata.stack && post.metadata.stack.length > 0 && (
-              <Row gap="8" wrap horizontal="center">
-                {post.metadata.stack.map((tech) => (
-                  <Tag key={tech} size="s">
-                    {tech}
-                  </Tag>
-                ))}
-              </Row>
-            )}
-          </Column>
-        )}
-      </Column>
-      {(post.metadata.image || post.metadata.images.length > 0) && (
-        <Media
-          priority
-          aspectRatio="16 / 9"
-          radius="m"
-          alt={`${post.metadata.title} screenshot`}
-          src={post.metadata.image || post.metadata.images[0]}
-        />
+
+        <div className="actions">
+          {m.link && (
+            <a className="btn pri" href={m.link} target="_blank" rel="noopener noreferrer">
+              Live site ↗
+            </a>
+          )}
+          {m.source && (
+            <a className="btn ghost" href={m.source} target="_blank" rel="noopener noreferrer">
+              Source ↗
+            </a>
+          )}
+        </div>
+      </section>
+
+      <Rv className="dt-cover" data-art-host>
+        <ProjectArt slug={post.slug} title={m.title} image={cover} />
+      </Rv>
+
+      {m.metrics && m.metrics.length > 0 && (
+        <Rv className="mx dt-stats">
+          {m.metrics.map((x) => (
+            <div className="m" key={x.label}>
+              <b>
+                <MetricValue value={x.value} />
+              </b>
+              <span>{x.label}</span>
+            </div>
+          ))}
+        </Rv>
       )}
-      <Column style={{ margin: "auto" }} as="article" maxWidth="xs">
-        <CustomMDX source={post.content} />
-      </Column>
-      {/* <Column fillWidth gap="40" horizontal="center" marginTop="40">
-        <Line maxWidth="40" />
-        <Heading as="h2" variant="heading-strong-xl" marginBottom="24">
-          Related projects
-        </Heading>
-        <Projects exclude={[post.slug]} range={[2]} />
-      </Column> */}
+
+      {m.stack && m.stack.length > 0 && (
+        <div className="chips dt-stack">
+          {m.stack.map((s) => (
+            <span className="chip" key={s}>
+              {s}
+            </span>
+          ))}
+        </div>
+      )}
+
+      {meta && (
+        <div className="dt-flow">
+          <div className="eyebrow">how it works</div>
+          <div className="flow">
+            {meta.flow.map((f, i) => (
+              <span key={f} style={{ display: "contents" }}>
+                {i > 0 && <i>→</i>}
+                <span>{f}</span>
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div className="doc">
+        {headings.length > 1 ? <Toc items={headings} /> : <div />}
+        <article>
+          <Prose source={post.content} />
+        </article>
+      </div>
+
+      <nav className="nextnav" aria-label="More projects">
+        <Link href={`/work/${prev.slug}`} className="card">
+          <span className="mono">← previous</span>
+          <h3>{prev.metadata.title}</h3>
+        </Link>
+        <Link href={`/work/${next.slug}`} className="card" style={{ textAlign: "right" }}>
+          <span className="mono">next →</span>
+          <h3>{next.metadata.title}</h3>
+        </Link>
+      </nav>
+
       <ScrollToHash />
-    </Column>
+    </RqPage>
   );
 }
