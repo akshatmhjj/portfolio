@@ -121,7 +121,7 @@ const about: About = {
         <br />
         <br />
         I build fast, secure web and iOS products, plus grounded AI tools. Currently a Software
-        Engineer Intern at MLock Innovations.
+        Engineer at MLock Innovations.
       </>
     ),
   },
@@ -155,7 +155,7 @@ const about: About = {
       {
         company: "MLock Innovations",
         timeframe: "Sep 2026 - Present",
-        role: "Software Engineer Intern",
+        role: "Software Engineer",
         achievements: [
           <>
             <strong>80+ REST endpoints</strong> across a multi-tenant IoT self-service platform: three
