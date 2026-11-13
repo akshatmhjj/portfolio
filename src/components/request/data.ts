@@ -81,7 +81,7 @@ export const CLIENT_CARDS: {
 
 export const API_CARD = {
   company: "MLock Innovations",
-  role: "Software Engineer Intern · multi-tenant IoT platform",
+  role: "Software Engineer · multi-tenant IoT platform",
   when: "Sep 2026 → now",
   metrics: [
     { value: 80, suffix: "+", label: "REST endpoints across three Next.js + TS apps" },

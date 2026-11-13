@@ -257,7 +257,7 @@ export default function RequestSite({ person, social, projects, resumeHref, abou
             </div>
             <Rv as="p" className="who" delay={0.2} now>
               Software engineer building fast, secure web and iOS products, plus AI tools that know when to say “I
-              don&apos;t know.” Currently interning at MLock Innovations.
+              don&apos;t know.” Currently working at MLock Innovations.
             </Rv>
             <Rv className="cta" delay={0.3} now>
               <a className="btn pri" href="#s1">
