@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { Meta, Schema } from "@once-ui-system/core";
 import { baseURL, about, person, social } from "@/resources";
 import { getSortedPosts } from "@/components/request/projects";
@@ -67,6 +68,17 @@ export default function Home() {
         social={social.map((s) => ({ name: s.name, link: s.link }))}
         projects={loadProjects()}
         resumeHref={encodeURI("/Akshat Mahajan Resume.pdf")}
+        about={{
+          experience: about.work.experiences.map((e) => ({
+            company: e.company,
+            role: e.role,
+            timeframe: e.timeframe,
+            achievements: e.achievements.map((a, i) => <Fragment key={i}>{a}</Fragment>),
+          })),
+          skills: about.technical.skills.map((g) => ({ title: g.title, tags: (g.tags ?? []).map((t) => t.name) })),
+          education: about.studies.institutions.map((i) => ({ name: i.name, description: i.description })),
+          certifications: about.certifications.items.map((c) => ({ name: c.name, link: c.link })),
+        }}
       />
     </>
   );

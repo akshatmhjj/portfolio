@@ -3,18 +3,18 @@
 import "./request.css";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties } from "react";
-import { PageNav, useThemeToggle } from "./Chrome";
+import { useThemeToggle } from "./Chrome";
+import { SiteHeader } from "./SiteHeader";
 import { rqFontClasses } from "./fonts";
 import {
   API_CARD,
   CLIENT_CARDS,
   PROJECT_META,
   SECTIONS,
-  SKILL_CHIPS,
   WORDS,
 } from "./data";
 import type { Layer, Metric } from "./data";
-import { Count, MetricValue, Rv, SunMoon } from "./ui";
+import { Count, MetricValue, Rv } from "./ui";
 import Widget from "./Widget";
 import { GroundedDemo, IdempotencyDemo, PredictyeDemo, ShortifyDemo } from "./Demos";
 import { Drawer, Palette } from "./Overlays";
@@ -96,7 +96,7 @@ function ProjectCard({ p, onOpen }: { p: ProjectData; onOpen: () => void }) {
   );
 }
 
-export default function RequestSite({ person, social, projects, resumeHref }: SiteProps) {
+export default function RequestSite({ person, social, projects, resumeHref, about }: SiteProps) {
   const { dark, toggle: toggleTheme } = useThemeToggle();
   const [wi, setWi] = useState(0);
   const [wordClass, setWordClass] = useState("");
@@ -105,7 +105,6 @@ export default function RequestSite({ person, social, projects, resumeHref }: Si
   const [drawer, setDrawer] = useState<string | null>(null);
   const [palette, setPalette] = useState(false);
   const rootRef = useRef<HTMLElement>(null);
-  const progRef = useRef<HTMLElement>(null);
 
   const layerProjects = (layer: Layer) =>
     projects.filter((p) => (PROJECT_META[p.slug]?.layer ?? "data") === layer);
@@ -151,9 +150,6 @@ export default function RequestSite({ person, social, projects, resumeHref }: Si
   /* scroll progress + active section */
   useEffect(() => {
     const onScroll = () => {
-      const h = document.documentElement;
-      const p = scrollY / Math.max(1, h.scrollHeight - innerHeight);
-      if (progRef.current) progRef.current.style.width = `${p * 100}%`;
       const mid = innerHeight * 0.45;
       let act = -1;
       SECTIONS.forEach((s, i) => {
@@ -219,34 +215,12 @@ export default function RequestSite({ person, social, projects, resumeHref }: Si
       <noscript>
         <style>{`.rq .rv{opacity:1!important;transform:none!important}`}</style>
       </noscript>
-      <div className="prog">
-        <i ref={progRef} />
-      </div>
-
-      <header className="hdr">
-        <a className="brand" href="#top" aria-label={person.name}>
-          <span className="logo">{person.name[0]}</span>
-          {person.name}
-        </a>
-        <div className="hright">
-          <nav className="nav" aria-label="Links">
-            {navLinks.map((s) => (
-              <a key={s.name} href={s.link} target="_blank" rel="noopener noreferrer">
-                {s.name.toLowerCase()}
-              </a>
-            ))}
-            <a href={`mailto:${person.email}`}>email</a>
-          </nav>
-          <div className="here" style={cssVar({ "--hc": COLORS[Math.max(active, 0)] })}>
-            <i />
-            <span>{active >= 0 ? SECTIONS[active].label : "hero"}</span>
-          </div>
-          <PageNav hideOnMobile />
-          <button className="tbtn" onClick={toggleTheme} aria-label={`Switch to ${dark ? "light" : "dark"} theme`}>
-            <SunMoon dark={dark} />
-          </button>
-        </div>
-      </header>
+      <SiteHeader
+        name={person.name}
+        email={person.email}
+        links={navLinks}
+        resumeHref={resumeHref}
+      />
 
       <div className="wrap" id="top">
         <section className="hero">
@@ -434,13 +408,86 @@ export default function RequestSite({ person, social, projects, resumeHref }: Si
                   <div className="mono">B.Tech CSE · SVVV Indore · 2022 – 2026</div>
                 </div>
               </Rv>
-              <Rv className="chips">
-                {SKILL_CHIPS.map((s) => (
-                  <span className="chip" key={s}>
-                    {s}
-                  </span>
-                ))}
+              <Rv className="full-head">
+                <div className="eyebrow">the full picture</div>
+                <h3 className="h3">Everything else, in one place.</h3>
               </Rv>
+              <div className="full">
+                <Rv as="article" className="card wide">
+                  <div className="ch">
+                    <h3>Experience</h3>
+                    <span className="mono">{about.experience.length} roles</span>
+                  </div>
+                  <div className="jobs">
+                    {about.experience.map((e, i) => (
+                      <details className="job" key={e.company} open={i === 0}>
+                        <summary>
+                          <span className="jt">
+                            <b>{e.company}</b>
+                            <span className="role">{e.role}</span>
+                          </span>
+                          <span className="mono">{e.timeframe}</span>
+                        </summary>
+                        <ul className="plist">
+                          {e.achievements.map((a, j) => (
+                            <li key={j}>{a}</li>
+                          ))}
+                        </ul>
+                      </details>
+                    ))}
+                  </div>
+                </Rv>
+
+                <Rv as="article" className="card wide" delay={0.05}>
+                  <div className="ch">
+                    <h3>Skills</h3>
+                    <span className="mono">{about.skills.reduce((n, g) => n + g.tags.length, 0)} tools</span>
+                  </div>
+                  <div className="skillgrid">
+                    {about.skills.map((g) => (
+                      <div className="skillgrp" key={g.title}>
+                        <div className="eyebrow">{g.title}</div>
+                        <div className="chips">
+                          {g.tags.map((t) => (
+                            <span className="chip" key={t}>
+                              {t}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </Rv>
+
+                <Rv as="article" className="card" delay={0.05}>
+                  <div className="ch">
+                    <h3>Education</h3>
+                  </div>
+                  <div className="edu">
+                    {about.education.map((ed) => (
+                      <div key={ed.name}>
+                        <b>{ed.name}</b>
+                        <div className="mono">{ed.description}</div>
+                      </div>
+                    ))}
+                  </div>
+                </Rv>
+
+                <Rv as="article" className="card" delay={0.1}>
+                  <div className="ch">
+                    <h3>Certifications</h3>
+                    <span className="mono">{about.certifications.length}</span>
+                  </div>
+                  <div className="certs">
+                    {about.certifications.map((c) => (
+                      <a key={c.name} href={c.link} target="_blank" rel="noopener noreferrer">
+                        <span>{c.name}</span>
+                        <span aria-hidden="true">↗</span>
+                      </a>
+                    ))}
+                  </div>
+                </Rv>
+              </div>
             </section>
           </div>
         </div>

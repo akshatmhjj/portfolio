@@ -141,17 +141,5 @@ export const GROUNDED_QA = [
   { ok: false, score: 0.19, text: "I can't answer that from your documents.", cite: "" },
 ];
 
-export const SKILL_CHIPS = [
-  "TypeScript",
-  "Next.js",
-  "React",
-  "Swift / SwiftUI",
-  "Node.js",
-  "PostgreSQL",
-  "Redis",
-  "Python",
-  "RAG",
-  "Docker",
-];
 
 export const B62 = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

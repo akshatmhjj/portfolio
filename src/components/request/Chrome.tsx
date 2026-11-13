@@ -1,11 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useTheme } from "@once-ui-system/core";
 import { SunMoon } from "./ui";
-import type { SocialLink } from "./types";
 
 /** Reads/toggles the site-wide theme (the same data-theme attribute the classic UI uses). */
 export function useThemeToggle() {
@@ -29,67 +26,6 @@ export function ThemeButton() {
     <button className="tbtn" onClick={toggle} aria-label={`Switch to ${dark ? "light" : "dark"} theme`}>
       <SunMoon dark={dark} />
     </button>
-  );
-}
-
-/** Small "home | work" switcher shared by every page of the new UI. */
-export function PageNav({ hideOnMobile = false }: { hideOnMobile?: boolean }) {
-  const path = usePathname() ?? "";
-  return (
-    <nav className={`pnav ${hideOnMobile ? "hm" : ""}`} aria-label="Pages">
-      <Link href="/" className={path === "/" ? "on" : ""}>
-        home
-      </Link>
-      <Link href="/work" className={path.startsWith("/work") ? "on" : ""}>
-        work
-      </Link>
-    </nav>
-  );
-}
-
-/** Header + reading-progress bar for the inner (/work) pages. */
-export function RqHeader({ name, email, links }: { name: string; email: string; links: SocialLink[] }) {
-  const prog = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const onScroll = () => {
-      const h = document.documentElement;
-      const p = scrollY / Math.max(1, h.scrollHeight - innerHeight);
-      if (prog.current) prog.current.style.width = `${p * 100}%`;
-    };
-    onScroll();
-    addEventListener("scroll", onScroll, { passive: true });
-    addEventListener("resize", onScroll);
-    return () => {
-      removeEventListener("scroll", onScroll);
-      removeEventListener("resize", onScroll);
-    };
-  }, []);
-
-  return (
-    <>
-      <div className="prog">
-        <i ref={prog} />
-      </div>
-      <header className="hdr">
-        <Link className="brand" href="/" aria-label={`${name} — home`}>
-          <span className="logo">{name[0]}</span>
-          {name}
-        </Link>
-        <div className="hright">
-          <nav className="nav" aria-label="Links">
-            {links.map((s) => (
-              <a key={s.name} href={s.link} target="_blank" rel="noopener noreferrer">
-                {s.name.toLowerCase()}
-              </a>
-            ))}
-            <a href={`mailto:${email}`}>email</a>
-          </nav>
-          <PageNav />
-          <ThemeButton />
-        </div>
-      </header>
-    </>
   );
 }
 
