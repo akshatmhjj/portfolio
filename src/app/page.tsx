@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { Meta, Schema } from "@once-ui-system/core";
+import { Meta, Schema } from "@/lib/seo";
 import { baseURL, about, person, social } from "@/resources";
 import { getSortedPosts } from "@/components/request/projects";
 import { ogUrl } from "@/components/request/og";

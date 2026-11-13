@@ -189,10 +189,10 @@ export default function Widget() {
         </div>
         <span className="mono">GET /api/items/42</span>
         <div className="seg" role="group" aria-label="Cache toggle">
-          <button className={cacheUi ? "on" : ""} onClick={() => setCache(true)}>
+          <button className={cacheUi ? "on" : ""} aria-pressed={cacheUi} onClick={() => setCache(true)}>
             cache on
           </button>
-          <button className={cacheUi ? "" : "on"} onClick={() => setCache(false)}>
+          <button className={cacheUi ? "" : "on"} aria-pressed={!cacheUi} onClick={() => setCache(false)}>
             cache off
           </button>
         </div>
@@ -212,11 +212,19 @@ export default function Widget() {
             key={n.k}
             className={`nd ${lit[n.k] || ""}`}
             tabIndex={0}
+            role="button"
+            aria-label={`${n.title}: what I built here`}
             transform={`translate(${n.x},37)`}
             style={{ "--nc": n.color } as CSSProperties}
             onMouseEnter={() => setInfo(n.k)}
             onFocus={() => setInfo(n.k)}
             onClick={() => setInfo(n.k)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setInfo(n.k);
+              }
+            }}
           >
             <rect width="92" height="56" rx="14" />
             <text x="46" y="25" textAnchor="middle">
@@ -261,7 +269,9 @@ export default function Widget() {
           Send request ▸
         </button>
       </div>
-      <div className="ninfo mono">{NODE_INFO[info]}</div>
+      <div className="ninfo mono" aria-live="polite">
+        {NODE_INFO[info]}
+      </div>
     </div>
   );
 }

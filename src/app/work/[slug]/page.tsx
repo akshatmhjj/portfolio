@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Meta, Schema } from "@once-ui-system/core";
+import { Meta, Schema } from "@/lib/seo";
 import { Metadata } from "next";
 import { baseURL, about, person, work } from "@/resources";
 import { RqPage } from "@/components/request/PageShell";
@@ -12,7 +12,7 @@ import { PROJECT_META } from "@/components/request/data";
 import { MetricValue, Rv } from "@/components/request/ui";
 import { ProjectArt } from "@/components/request/ProjectArt";
 import { ogUrl, projectAccentHex } from "@/components/request/og";
-import { ScrollToHash } from "@/components";
+import { ScrollToHash } from "@/components/ScrollToHash";
 
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
   return getSortedPosts().map((post) => ({ slug: post.slug }));
@@ -99,10 +99,10 @@ export default async function Project({ params }: { params: Promise<{ slug: stri
           )}
           {meta && <span className="role">{meta.role}</span>}
         </div>
-        <Rv as="h1" className="h1 dt-title">
+        <Rv as="h1" className="h1 dt-title" now>
           {m.title}
         </Rv>
-        <Rv as="p" className="lede dt-lede" delay={0.08}>
+        <Rv as="p" className="lede dt-lede" delay={0.08} now>
           {m.summary}
         </Rv>
 
@@ -110,7 +110,7 @@ export default async function Project({ params }: { params: Promise<{ slug: stri
           <div className="vers">
             {m.versions.map((v) => (
               <a key={v.label} href={v.link} target="_blank" rel="noopener noreferrer" className="chip">
-                <b>{v.label}</b> {v.name} ↗
+                <b>{v.label}</b> {v.name} ↗<span className="sr"> (opens in a new tab)</span>
               </a>
             ))}
           </div>
@@ -119,12 +119,12 @@ export default async function Project({ params }: { params: Promise<{ slug: stri
         <div className="actions">
           {m.link && (
             <a className="btn pri" href={m.link} target="_blank" rel="noopener noreferrer">
-              Live site ↗
+              Live site ↗<span className="sr"> (opens in a new tab)</span>
             </a>
           )}
           {m.source && (
             <a className="btn ghost" href={m.source} target="_blank" rel="noopener noreferrer">
-              Source ↗
+              Source ↗<span className="sr"> (opens in a new tab)</span>
             </a>
           )}
         </div>

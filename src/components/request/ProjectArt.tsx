@@ -144,7 +144,7 @@ function CodeJourneyScene({ step }: Scene) {
         </g>
       ))}
 
-      <g className="a-fade" style={{ opacity: bubble ? 1 : 0.5, transform: `translateY(${bubble ? 0 : 6}px)` }}>
+      <g className="a-fade" style={{ transform: `translateY(${bubble ? 0 : 4}px)` }}>
         <rect className="a-pill" x="372" y="276" width="220" height="56" rx="16" />
         <circle className="a-acc" cx="396" cy="296" r="5" />
         <text className="a-m" x="408" y="300">
@@ -246,7 +246,7 @@ function ShortifyScene({ step }: Scene) {
         long url · 52 chars
       </text>
       <rect className="a-pill" x="40" y="64" width="560" height="46" rx="14" />
-      <text className="a-t a-mono a-fade" x="62" y="92" style={{ opacity: step >= 1 ? 0.3 : 1 }}>
+      <text className="a-t a-mono a-fade" x="62" y="92" style={{ opacity: step >= 1 ? 0.55 : 1 }}>
         {LONG}
       </text>
 
@@ -275,7 +275,6 @@ function ShortifyScene({ step }: Scene) {
           className="a-big a-okt a-fade"
           x="470"
           y="290"
-          style={{ opacity: step >= 8 ? 1 : 0.35 }}
         >
           38 ms
         </text>
@@ -341,7 +340,7 @@ function PredictyeScene({ step }: Scene) {
         style={{ transform: `translateX(${p * 330}px)`, opacity: step >= 2 && step < 7 ? 1 : 0 }}
       />
 
-      <g className="a-fade" style={{ opacity: step >= 2 ? 1 : 0.4 }}>
+      <g className="a-fade">
         <text className="a-m" x="270" y="92">
           worth now
         </text>

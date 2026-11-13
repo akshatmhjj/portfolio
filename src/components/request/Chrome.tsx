@@ -1,12 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useTheme } from "@once-ui-system/core";
 import { SunMoon } from "./ui";
 
 /** Reads/toggles the site-wide theme (the same data-theme attribute the classic UI uses). */
 export function useThemeToggle() {
-  const { setTheme } = useTheme();
   const [dark, setDark] = useState(true);
 
   useEffect(() => {
@@ -17,7 +15,16 @@ export function useThemeToggle() {
     return () => mo.disconnect();
   }, []);
 
-  return { dark, toggle: () => setTheme(dark ? "light" : "dark") };
+  // Same attribute and storage key the classic UI's ThemeProvider uses, so both stay in sync.
+  const toggle = () => {
+    const next = dark ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    try {
+      localStorage.setItem("data-theme", next);
+    } catch {}
+  };
+
+  return { dark, toggle };
 }
 
 export function ThemeButton() {
@@ -50,7 +57,7 @@ export function Toc({ items }: { items: { id: string; text: string }[] }) {
 
   return (
     <aside className="rail" aria-label="On this page">
-      <h6>outline</h6>
+      <p className="rail-title">outline</p>
       <div>
         {items.map((it, i) => (
           <a

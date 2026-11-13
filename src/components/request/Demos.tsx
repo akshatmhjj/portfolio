@@ -206,10 +206,10 @@ export function GroundedDemo() {
     <div className="demo">
       <DemoHead>answer or refuse</DemoHead>
       <div className="row">
-        <button className={`pill ${sel === 0 ? "on" : ""}`} onClick={() => ask(0)}>
+        <button className={`pill ${sel === 0 ? "on" : ""}`} aria-pressed={sel === 0} onClick={() => ask(0)}>
           What is the refund window?
         </button>
-        <button className={`pill ${sel === 1 ? "on" : ""}`} onClick={() => ask(1)}>
+        <button className={`pill ${sel === 1 ? "on" : ""}`} aria-pressed={sel === 1} onClick={() => ask(1)}>
           Who won the 2030 World Cup?
         </button>
       </div>

@@ -8,9 +8,11 @@ import { SiteHeader } from "./SiteHeader";
 export function RqPage({ children, accent }: { children: React.ReactNode; accent?: string }) {
   const links = social.filter((s) => s.name !== "Email").map((s) => ({ name: s.name, link: s.link }));
   return (
-    <main className={`rq ${rqFontClasses}`} style={accent ? ({ "--c": accent } as React.CSSProperties) : undefined}>
+    <div className={`rq ${rqFontClasses}`} style={accent ? ({ "--c": accent } as React.CSSProperties) : undefined}>
       <SiteHeader name={person.name} email={person.email} links={links} resumeHref={encodeURI("/Akshat Mahajan Resume.pdf")} />
-      <div className="wrap inner">{children}</div>
+      <main id="main" tabIndex={-1}>
+        <div className="wrap inner">{children}</div>
+      </main>
       <div className="wrap">
         <footer className="foot mono">
           <span>
@@ -19,6 +21,6 @@ export function RqPage({ children, accent }: { children: React.ReactNode; accent
           <Link href="/">back to the request ↑</Link>
         </footer>
       </div>
-    </main>
+    </div>
   );
 }

@@ -4,6 +4,21 @@
    `data-theme` attribute on <html> (same one the Once UI toggle sets).
    ------------------------------------------------------------------ */
 
+/* page frame: colours follow the same data-theme attribute the theme toggle sets */
+html {
+  background: #090b0f;
+  color-scheme: dark;
+}
+html[data-theme="light"] {
+  background: #f6f5f1;
+  color-scheme: light;
+}
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: inherit;
+}
+
 html:has(.rq) {
   scroll-behavior: smooth;
 }
@@ -61,7 +76,7 @@ html:has(.rq) {
 html[data-theme="light"] .rq {
   --bg: #f6f5f1;
   --text: #14161b;
-  --mute: #5f6776;
+  --mute: #566070;
   --soft: #495062;
   --body2: #3b4150;
   --ctext: #3b4150;
@@ -82,7 +97,7 @@ html[data-theme="light"] .rq {
   --pill: rgba(255, 255, 255, 0.85);
   --hdrfade: rgba(246, 245, 241, 0.86);
   --scrim: rgba(235, 233, 226, 0.6);
-  --pkt: #3a62e6;
+  --pkt: #2f55d4;
   --btnpri-bg: #14161b;
   --btnpri-fg: #ffffff;
   --ink: #ffffff;
@@ -91,12 +106,12 @@ html[data-theme="light"] .rq {
   --glow1: rgba(58, 98, 230, 0.1);
   --glow2: rgba(122, 78, 224, 0.08);
   --glow3: rgba(11, 156, 112, 0.07);
-  --c1: #3a62e6;
-  --c2: #7a4ee0;
-  --c3: #c47500;
-  --c4: #0b9c70;
-  --c5: #e2532b;
-  --err: #d6402f;
+  --c1: #2f55d4;
+  --c2: #6b3fd0;
+  --c3: #8f5400;
+  --c4: #057052;
+  --c5: #b93a0a;
+  --err: #c4301f;
 }
 
 /* ---------- base ---------- */
@@ -394,7 +409,7 @@ html[data-theme="light"] .rq {
     height: 7px;
     border-radius: 50%;
     background: var(--c4);
-    animation: rq-ping 2s infinite;
+    animation: rq-ping 2s 4;
   }
   .tbtn {
     width: 38px;
@@ -447,7 +462,7 @@ html[data-theme="light"] .rq {
     height: 7px;
     border-radius: 50%;
     background: var(--c4);
-    animation: rq-ping 2s infinite;
+    animation: rq-ping 2s 4;
   }
   .h1 {
     font: 800 clamp(44px, 7.4vw, 112px) / 0.95 var(--head);
@@ -532,7 +547,7 @@ html[data-theme="light"] .rq {
     width: 1px;
     height: 34px;
     background: linear-gradient(var(--c1), transparent);
-    animation: rq-drip 1.8s infinite;
+    animation: rq-drip 1.8s 4;
   }
 
   /* widget */
@@ -746,7 +761,7 @@ html[data-theme="light"] .rq {
     top: 96px;
     padding-top: 4px;
   }
-  .rail h6 {
+  .rail-title {
     font: 500 11px var(--mono);
     letter-spacing: 0.14em;
     color: var(--mute);
@@ -757,8 +772,14 @@ html[data-theme="light"] .rq {
     display: block;
     position: relative;
     padding: 10px 0 10px 22px;
-    opacity: 0.45;
-    transition: opacity 0.4s;
+  }
+  .rr .rn {
+    color: var(--mute);
+    transition: color 0.4s;
+  }
+  .rr.done .rn,
+  .rr.on .rn {
+    color: var(--text);
   }
   .rr::before {
     content: "";
@@ -786,10 +807,6 @@ html[data-theme="light"] .rq {
     background: var(--bg);
     border: 2px solid var(--rc);
     transition: 0.4s;
-  }
-  .rr.done,
-  .rr.on {
-    opacity: 1;
   }
   .rr.done i {
     background: var(--rc);
@@ -1211,6 +1228,13 @@ html[data-theme="light"] .rq {
     opacity: 1;
     transform: none;
   }
+  .rv.now {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    animation: rq-rise 0.8s var(--ease) both;
+    animation-delay: var(--d, 0s);
+  }
 
   /* cmd pill + palette + drawer */
   .scrim {
@@ -1241,13 +1265,16 @@ html[data-theme="light"] .rq {
     box-shadow: 0 40px 100px var(--shadow);
     opacity: 0;
     pointer-events: none;
-    transition: 0.3s var(--ease);
+    visibility: hidden;
+    transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), visibility 0s 0.3s;
     overflow: hidden;
   }
   .pal.on {
     opacity: 1;
     pointer-events: auto;
+    visibility: visible;
     transform: translate(-50%, 0);
+    transition-delay: 0s;
   }
   .pal input {
     width: 100%;
@@ -1293,12 +1320,15 @@ html[data-theme="light"] .rq {
     background: var(--surface2);
     border-left: 1px solid var(--line);
     transform: translateX(104%);
-    transition: transform 0.6s var(--ease);
+    visibility: hidden;
+    transition: transform 0.6s var(--ease), visibility 0s 0.6s;
     overflow-y: auto;
     overscroll-behavior: contain;
   }
   .drawer.on {
     transform: none;
+    visibility: visible;
+    transition-delay: 0s;
   }
   .dr-in {
     padding: 70px 28px 60px;
@@ -1311,13 +1341,10 @@ html[data-theme="light"] .rq {
     width: 40px;
     height: 40px;
     border-radius: 12px;
-    background: var(--panel2);
+    background: var(--surface2);
     border: 1px solid var(--line);
-    display: none;
-    place-items: center;
-  }
-  .dr-x.on {
     display: grid;
+    place-items: center;
   }
   .dr-x svg {
     stroke: var(--text);
@@ -1476,7 +1503,7 @@ html[data-theme="light"] .rq {
     align-items: center;
     margin: 4px 6px 0;
   }
-  .wcard h3 {
+  .wcard .wt {
     font: 700 clamp(26px, 3vw, 36px) var(--head);
     letter-spacing: -0.03em;
     margin: 10px 6px 2px;
@@ -2206,6 +2233,63 @@ html[data-theme="light"] .rq {
   }
 }
 
+/* ------------------------------------------------------------------
+   Accessibility helpers
+   ------------------------------------------------------------------ */
+.rq {
+  /* visible keyboard focus everywhere */
+  :focus-visible {
+    outline: 2px solid var(--c1);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  .nd:focus-visible {
+    outline: none;
+  }
+  .nd:focus-visible rect {
+    stroke-width: 2.5;
+  }
+  .demo input:focus-visible,
+  .pal input:focus-visible {
+    outline-offset: 1px;
+  }
+  .pal input:focus-visible {
+    outline: none;
+  }
+  main:focus {
+    outline: none;
+  }
+
+  /* visually hidden, still read by screen readers */
+  .sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .skip {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 200;
+    padding: 10px 16px;
+    border-radius: 12px;
+    background: var(--btnpri-bg);
+    color: var(--btnpri-fg);
+    font: 600 14px var(--sans);
+    transform: translateY(-160%);
+    transition: transform 0.2s var(--ease);
+  }
+  .skip:focus {
+    transform: none;
+  }
+}
+
 html:has(.rq) {
   @media (prefers-reduced-motion: reduce) {
     scroll-behavior: auto;
@@ -2238,5 +2322,16 @@ html:has(.rq) {
   100% {
     transform: scaleY(0);
     transform-origin: bottom;
+  }
+}
+
+@keyframes rq-rise {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }

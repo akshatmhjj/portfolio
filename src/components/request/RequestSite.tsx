@@ -3,6 +3,7 @@
 import "./request.css";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties } from "react";
+import Image from "next/image";
 import { useThemeToggle } from "./Chrome";
 import { SiteHeader } from "./SiteHeader";
 import { rqFontClasses } from "./fonts";
@@ -80,12 +81,12 @@ function ProjectCard({ p, onOpen }: { p: ProjectData; onOpen: () => void }) {
       <div className="actions">
         {p.link && (
           <a className="mini" href={p.link} target="_blank" rel="noopener noreferrer">
-            Live site ↗
+            Live site ↗<span className="sr"> (opens in a new tab)</span>
           </a>
         )}
         {p.source && (
           <a className="mini" href={p.source} target="_blank" rel="noopener noreferrer">
-            Source ↗
+            Source ↗<span className="sr"> (opens in a new tab)</span>
           </a>
         )}
         <button className="mini" onClick={onOpen}>
@@ -104,15 +105,29 @@ export default function RequestSite({ person, social, projects, resumeHref, abou
   const [active, setActive] = useState(-1);
   const [drawer, setDrawer] = useState<string | null>(null);
   const [palette, setPalette] = useState(false);
-  const rootRef = useRef<HTMLElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
 
   const layerProjects = (layer: Layer) =>
     projects.filter((p) => (PROJECT_META[p.slug]?.layer ?? "data") === layer);
 
   /* cycling headline word */
   useEffect(() => {
-    const id = setInterval(() => {
+    // Auto-updating text must be stoppable: skip it for reduced-motion users and
+    // stop after two full loops, settling back on the first word.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let changes = 0;
+    let id: ReturnType<typeof setInterval>;
+    // Start after the page has settled (also keeps late text changes out of the largest-paint measurement).
+    const start = setTimeout(() => {
+      id = setInterval(tick, 3300);
+    }, 6500);
+    const tick = () => {
       if (document.hidden) return;
+      if (changes >= WORDS.length * 2) {
+        clearInterval(id);
+        return;
+      }
+      changes += 1;
       setWordClass("out");
       setProofOn(false);
       setTimeout(() => {
@@ -125,8 +140,11 @@ export default function RequestSite({ person, social, projects, resumeHref, abou
           }),
         );
       }, 380);
-    }, 3300);
-    return () => clearInterval(id);
+    };
+    return () => {
+      clearTimeout(start);
+      clearInterval(id);
+    };
   }, []);
 
   /* pointer glow */
@@ -211,7 +229,7 @@ export default function RequestSite({ person, social, projects, resumeHref, abou
   const navLinks = social.filter((s) => s.name !== "Email");
 
   return (
-    <main ref={rootRef} className={`rq ${rqFontClasses}`}>
+    <div ref={rootRef} className={`rq ${rqFontClasses}`}>
       <noscript>
         <style>{`.rq .rv{opacity:1!important;transform:none!important}`}</style>
       </noscript>
@@ -222,25 +240,26 @@ export default function RequestSite({ person, social, projects, resumeHref, abou
         resumeHref={resumeHref}
       />
 
+      <main id="main" tabIndex={-1}>
       <div className="wrap" id="top">
         <section className="hero">
           <div>
-            <Rv as="span" className="tagline">
+            <Rv as="span" className="tagline" now>
               <b />
               open to full-time roles · relocation
             </Rv>
-            <Rv as="h1" className="h1" delay={0.08}>
+            <Rv as="h1" className="h1" delay={0.08} now aria-live="off">
               I build for
               <span className={`w ${wordClass}`}>{WORDS[wi][0]}</span>
             </Rv>
             <div className="proof" style={{ opacity: proofOn ? 1 : 0 }}>
               {WORDS[wi][1]}
             </div>
-            <Rv as="p" className="who" delay={0.2}>
+            <Rv as="p" className="who" delay={0.2} now>
               Software engineer building fast, secure web and iOS products, plus AI tools that know when to say “I
               don&apos;t know.” Currently interning at MLock Innovations.
             </Rv>
-            <Rv className="cta" delay={0.3}>
+            <Rv className="cta" delay={0.3} now>
               <a className="btn pri" href="#s1">
                 Follow the request ↓
               </a>
@@ -249,7 +268,7 @@ export default function RequestSite({ person, social, projects, resumeHref, abou
               </a>
             </Rv>
           </div>
-          <Rv delay={0.2}>
+          <Rv delay={0.2} now>
             <Widget />
           </Rv>
           <div className="cue mono">
@@ -260,7 +279,7 @@ export default function RequestSite({ person, social, projects, resumeHref, abou
 
         <div className="layout">
           <aside className="rail" aria-label="Trace of this page">
-            <h6>trace</h6>
+            <p className="rail-title">trace</p>
             <div>
               {SECTIONS.map((s, i) => (
                 <a
@@ -389,17 +408,17 @@ export default function RequestSite({ person, social, projects, resumeHref, abou
                   {person.email}
                 </a>
                 <a className="btn ghost" href={resumeHref} target="_blank" rel="noopener noreferrer">
-                  Resume
+                  Resume<span className="sr"> (opens in a new tab)</span>
                 </a>
                 {navLinks.map((s) => (
                   <a key={s.name} className="btn ghost" href={s.link} target="_blank" rel="noopener noreferrer">
                     {s.name}
+                    <span className="sr"> (opens in a new tab)</span>
                   </a>
                 ))}
               </Rv>
               <Rv className="me">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={person.avatar} alt={person.name} />
+                <Image src={person.avatar} alt={person.name} width={84} height={84} sizes="84px" />
                 <div>
                   <strong>{person.name}</strong>
                   <div className="mono">
@@ -491,7 +510,10 @@ export default function RequestSite({ person, social, projects, resumeHref, abou
             </section>
           </div>
         </div>
+      </div>
+      </main>
 
+      <div className="wrap">
         <footer className="foot mono">
           <span>
             © {new Date().getFullYear()} {person.name}
@@ -503,6 +525,6 @@ export default function RequestSite({ person, social, projects, resumeHref, abou
       <div className={`scrim ${drawer || palette ? "on" : ""}`} onClick={closeAll} />
       <Palette open={palette} items={items} onClose={() => setPalette(false)} />
       <Drawer project={current} onClose={() => setDrawer(null)} />
-    </main>
+    </div>
   );
 }

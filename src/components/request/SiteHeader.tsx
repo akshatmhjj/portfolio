@@ -106,6 +106,9 @@ export function SiteHeader({
 
   return (
     <>
+      <a className="skip" href="#main">
+        Skip to content
+      </a>
       <div className="prog" aria-hidden="true">
         <i ref={prog} />
       </div>
@@ -135,13 +138,13 @@ export function SiteHeader({
                   href={s.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={s.name}
+                  aria-label={`${s.name} (opens in a new tab)`}
                   title={s.name}
                 >
                   <Icon name={ICON_FOR[s.name.toLowerCase()] ?? "link"} />
                 </a>
               ))}
-              <a className="ibtn" href={resumeHref} target="_blank" rel="noopener noreferrer" aria-label="Resume" title="Resume">
+              <a className="ibtn" href={resumeHref} target="_blank" rel="noopener noreferrer" aria-label="Resume (opens in a new tab)" title="Resume">
                 <Icon name="file" />
               </a>
             </div>

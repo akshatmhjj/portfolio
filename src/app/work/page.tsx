@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Meta, Schema } from "@once-ui-system/core";
+import { Meta, Schema } from "@/lib/seo";
 import { baseURL, about, person, work } from "@/resources";
 import { RqPage } from "@/components/request/PageShell";
 import { getSortedPosts, projectAccent } from "@/components/request/projects";
@@ -48,13 +48,13 @@ export default function Work() {
       />
 
       <section className="wk-hero" style={{ "--c": "var(--c1)" } as React.CSSProperties}>
-        <Rv as="span" className="stag">
+        <Rv as="span" className="stag" now>
           work · {posts.length} projects
         </Rv>
-        <Rv as="h1" className="h1 wk-title" delay={0.06}>
+        <Rv as="h1" className="h1 wk-title" delay={0.06} now>
           Things I&apos;ve <span className="grad">built.</span>
         </Rv>
-        <Rv as="p" className="lede" delay={0.14}>
+        <Rv as="p" className="lede" delay={0.14} now>
           Each one started as a question I wanted answered: how fast can this be, how far can I trust it, what
           happens when it doesn&apos;t know. Open a project for the full story.
         </Rv>
@@ -78,7 +78,7 @@ export default function Work() {
                     </span>
                   )}
                 </div>
-                <h3>{m.title}</h3>
+                <h2 className="wt">{m.title}</h2>
                 {meta && <div className="role">{meta.role}</div>}
                 <p className="wsum">{m.summary}</p>
                 <div className="mx">

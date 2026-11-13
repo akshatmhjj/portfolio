@@ -10,6 +10,7 @@ const reducedMotion = () =>
 export function Rv({
   as: Tag = "div",
   delay = 0,
+  now = false,
   className = "",
   style,
   children,
@@ -17,6 +18,8 @@ export function Rv({
 }: {
   as?: ElementType;
   delay?: number;
+  /** Above-the-fold content: animates in with CSS only, so it never waits for JavaScript to appear. */
+  now?: boolean;
   className?: string;
   style?: CSSProperties;
   children?: ReactNode;
@@ -26,7 +29,7 @@ export function Rv({
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el || now) return;
     const io = new IntersectionObserver(
       ([e]) => {
         if (e.isIntersecting) {
@@ -38,12 +41,12 @@ export function Rv({
     );
     io.observe(el);
     return () => io.disconnect();
-  }, []);
+  }, [now]);
 
   return (
     <Tag
       ref={ref}
-      className={`rv ${on ? "in" : ""} ${className}`}
+      className={`rv ${now ? "now" : on ? "in" : ""} ${className}`}
       style={{ "--d": `${delay}s`, ...style } as CSSProperties}
       {...rest}
     >
