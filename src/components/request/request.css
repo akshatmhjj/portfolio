@@ -245,23 +245,11 @@ html[data-theme="light"] .rq {
     align-items: center;
     min-width: 0;
     white-space: nowrap;
-    font: 700 16px var(--head);
+    color: var(--text);
+  }
+  .bname {
+    font: 700 17px var(--head);
     letter-spacing: -0.02em;
-  }
-  .logo {
-    flex: none;
-    width: 34px;
-    height: 34px;
-    border-radius: 11px;
-    background: linear-gradient(135deg, var(--c1), var(--c2));
-    display: grid;
-    place-items: center;
-    color: var(--ink);
-    font: 800 15px var(--head);
-    transition: transform 0.3s var(--ease);
-  }
-  .brand:hover .logo {
-    transform: rotate(-8deg) scale(1.06);
   }
   .hright {
     justify-self: end;
@@ -2058,13 +2046,8 @@ html[data-theme="light"] .rq {
     .pnav {
       display: none;
     }
-    .brand {
+    .bname {
       font-size: 15px;
-    }
-    .logo {
-      width: 32px;
-      height: 32px;
-      border-radius: 10px;
     }
     .mp-pages {
       display: grid;
@@ -2114,25 +2097,6 @@ html[data-theme="light"] .rq {
     border-top: 1px dashed var(--line);
     padding: 4px 0;
   }
-  .job summary {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 0;
-    cursor: pointer;
-    list-style: none;
-  }
-  .job summary::-webkit-details-marker {
-    display: none;
-  }
-  .job summary::after {
-    content: "+";
-    font: 500 18px var(--mono);
-    color: var(--c);
-    margin-left: 4px;
-    transition: transform 0.3s var(--ease);
-  }
   .job[open] summary::after {
     transform: rotate(45deg);
   }
@@ -2149,6 +2113,49 @@ html[data-theme="light"] .rq {
   }
   .jt .role {
     margin: 0;
+  }
+  .job-head {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 0;
+    text-align: left;
+    cursor: pointer;
+    color: inherit;
+  }
+  .job-head:focus-visible {
+    outline: 2px solid var(--c1);
+    outline-offset: 3px;
+    border-radius: 8px;
+  }
+  .job-plus {
+    font: 500 20px var(--mono);
+    color: var(--c);
+    margin-left: 4px;
+    transition: transform 0.45s var(--ease);
+  }
+  .job.open .job-plus {
+    transform: rotate(45deg);
+  }
+  .job-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    visibility: hidden;
+    transition: grid-template-rows 0.45s var(--ease), visibility 0s linear 0.45s;
+  }
+  .job.open .job-panel {
+    grid-template-rows: 1fr;
+    visibility: visible;
+    transition: grid-template-rows 0.45s var(--ease), visibility 0s;
+  }
+  .job-inner {
+    min-height: 0;
+    overflow: hidden;
+  }
+  .job-inner .plist {
+    padding-top: 2px;
   }
   .plist {
     list-style: none;
@@ -2287,6 +2294,217 @@ html[data-theme="light"] .rq {
   }
   .skip:focus {
     transform: none;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Hero profile card
+   ------------------------------------------------------------------ */
+.rq .pc {
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 24px;
+  background: linear-gradient(180deg, var(--panel2), var(--panel));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 30px 80px -20px var(--shadow);
+}
+.rq .pc-top {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+.rq .pc-photo {
+  flex: none;
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--line);
+}
+.rq .pc-name {
+  font: 800 30px / 1.05 var(--head);
+  letter-spacing: -0.03em;
+}
+.rq .pc-role,
+.rq .pc-loc {
+  font-size: 13px;
+  color: var(--mute);
+  margin-top: 4px;
+}
+.rq .pc-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 22px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: var(--inset2);
+  border: 1px solid var(--line);
+  font-size: 14px;
+  color: var(--body2);
+}
+.rq .pc-status i {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--c4);
+  box-shadow: 0 0 10px var(--c4);
+  animation: rq-ping 2s 4;
+}
+.rq .pc-nums {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 22px;
+}
+.rq .pc-nums b {
+  display: block;
+  font: 800 34px / 1 var(--head);
+  letter-spacing: -0.04em;
+  color: var(--c1);
+}
+.rq .pc-nums span {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--mute);
+  line-height: 1.35;
+}
+.rq .pc-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 22px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+  .rq .pc-nums {
+    grid-template-columns: 1fr 1fr;
+  }
+  .rq .pc-nums > div:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ------------------------------------------------------------------
+   DESIGN VARIANTS (temporary): work ?work=1|2|3
+   ------------------------------------------------------------------ */
+/* work: filter chips */
+.rq .wf-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 0 0 22px;
+}
+.rq .wf-chips .pill {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  padding: 9px 16px;
+}
+.rq .wf-chips .pill .mono {
+  color: inherit;
+  opacity: 0.7;
+}
+.rq .wf-chips .pill.on {
+  background: var(--btnpri-bg);
+  color: var(--btnpri-fg);
+  border-color: transparent;
+}
+
+/* work: bento (first project as a feature) */
+.rq .wtext {
+  display: block;
+}
+.rq .wk-grid.v1 .feature {
+  grid-column: 1 / -1;
+}
+.rq .wk-grid.v1 .feature .wcard {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 32px;
+  align-items: center;
+  padding: 18px;
+}
+.rq .wk-grid.v1 .feature .wcard .cardimg {
+  margin: 0;
+}
+.rq .wk-grid.v1 .feature .wcard h2 {
+  font-size: clamp(34px, 4.2vw, 56px);
+}
+
+/* work: compact rows */
+.rq .wk-grid.v3 {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+.rq .wk-grid.v3 > div {
+  display: flex;
+}
+.rq .ctile {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 180px 1fr auto;
+  gap: 18px;
+  align-items: center;
+  padding: 12px;
+  border-radius: 18px;
+}
+.rq .ctile .cardimg {
+  margin: 0;
+}
+.rq .ctile .ct-body {
+  min-width: 0;
+}
+.rq .ctile .ct-top {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.rq .ctile h2 {
+  font: 700 22px var(--head);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.rq .ctile .ct-metric {
+  margin-top: 10px;
+}
+.rq .ctile .ct-metric b {
+  display: block;
+  font: 800 24px / 1 var(--head);
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+}
+.rq .ctile .ct-metric > span {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--mute);
+}
+.rq .ctile .wgo {
+  margin: 0 8px 0 0;
+  font-size: 22px;
+}
+
+@media (max-width: 759px) {
+  .rq .wk-grid.v1 .feature .wcard {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 999px) {
+  .rq .wk-grid.v3 {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 700px) {
+  .rq .ctile {
+    grid-template-columns: 110px 1fr;
+  }
+  .rq .ctile .wgo {
+    display: none;
   }
 }
 

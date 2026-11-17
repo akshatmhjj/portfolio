@@ -9,37 +9,6 @@ export const WORDS: [string, string][] = [
   ["honesty.", "92.9% correct refusals · Grounded RAG"],
 ];
 
-export type NodeKey = "client" | "api" | "cache" | "db";
-
-export const NODE_X: Record<NodeKey, number> = { client: 60, api: 190, cache: 320, db: 450 };
-
-export const NODE_INFO: Record<NodeKey | "none", string> = {
-  none: "Hover or tap a node to see what I built there.",
-  client:
-    "Next.js + React apps, SwiftUI and a modular iOS SDK. 25% faster page loads at Itigai, 20% faster partner integration at DigiValet.",
-  api: "80+ REST endpoints, JWT auth, role-based access and tenant isolation, backed by 200+ automated tests at MLock.",
-  cache:
-    "Redis caching: 90% less database load on Shortify, and 45% lower API latency at DigiValet through batching and caching.",
-  db: "PostgreSQL schemas, collision-free short codes, and idempotent payment capture with signed webhooks.",
-};
-
-// [label, ms]
-export const HIT: [string, number][] = [
-  ["network", 14],
-  ["auth · rbac", 9],
-  ["cache lookup", 3],
-  ["respond", 12],
-];
-export const MISS: [string, number][] = [
-  ["network", 14],
-  ["auth · rbac", 9],
-  ["cache lookup", 3],
-  ["db query", 380],
-  ["respond", 34],
-];
-
-export const LAYER_COLORS = ["var(--c1)", "var(--c2)", "var(--c3)", "var(--c4)", "var(--c5)"];
-
 export const SECTIONS = [
   { id: "s1", label: "01 client", off: [0, 16] },
   { id: "s2", label: "02 api", off: [14, 22] },
@@ -140,6 +109,5 @@ export const GROUNDED_QA = [
   },
   { ok: false, score: 0.19, text: "I can't answer that from your documents.", cite: "" },
 ];
-
 
 export const B62 = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

@@ -116,7 +116,6 @@ export function SiteHeader({
       <header className={`hdr ${scrolled ? "scrolled" : ""} ${hidden ? "hide" : ""}`}>
         <div className="hbar">
           <Link className="brand" href="/" onClick={goHome} aria-label={`${name} — home`}>
-            <span className="logo">{name[0]}</span>
             <span className="bname">{name}</span>
           </Link>
 

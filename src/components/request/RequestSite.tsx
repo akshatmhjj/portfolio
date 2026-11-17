@@ -16,7 +16,8 @@ import {
 } from "./data";
 import type { Layer, Metric } from "./data";
 import { Count, MetricValue, Rv } from "./ui";
-import Widget from "./Widget";
+import HeroProfile from "./HeroProfile";
+import { JobItem } from "./JobItem";
 import { GroundedDemo, IdempotencyDemo, PredictyeDemo, ShortifyDemo } from "./Demos";
 import { Drawer, Palette } from "./Overlays";
 import type { PaletteItem } from "./Overlays";
@@ -269,7 +270,7 @@ export default function RequestSite({ person, social, projects, resumeHref, abou
             </Rv>
           </div>
           <Rv delay={0.2} now>
-            <Widget />
+            <HeroProfile person={person} />
           </Rv>
           <div className="cue mono">
             <i />
@@ -439,20 +440,14 @@ export default function RequestSite({ person, social, projects, resumeHref, abou
                   </div>
                   <div className="jobs">
                     {about.experience.map((e, i) => (
-                      <details className="job" key={e.company} open={i === 0}>
-                        <summary>
-                          <span className="jt">
-                            <b>{e.company}</b>
-                            <span className="role">{e.role}</span>
-                          </span>
-                          <span className="mono">{e.timeframe}</span>
-                        </summary>
-                        <ul className="plist">
-                          {e.achievements.map((a, j) => (
-                            <li key={j}>{a}</li>
-                          ))}
-                        </ul>
-                      </details>
+                      <JobItem
+                        key={e.company}
+                        company={e.company}
+                        role={e.role}
+                        timeframe={e.timeframe}
+                        achievements={e.achievements}
+                        defaultOpen={i === 0}
+                      />
                     ))}
                   </div>
                 </Rv>
