@@ -11,7 +11,7 @@ const person: Person = {
   role: "Software Engineer",
   avatar: "/images/avatar.jpg",
   email: "akshatmahajan32@gmail.com",
-  location: "Indore, India",
+  location: "Bengaluru, India",
   languages: ["Hindi", "English", "French"],
 };
 
@@ -158,16 +158,13 @@ const about: About = {
         role: "Software Engineer",
         achievements: [
           <>
-            <strong>80+ REST endpoints</strong> across a multi-tenant IoT self-service platform: three
-            Next.js and TypeScript apps on a Node.js, Express and PostgreSQL backend.
+            <strong>80+ REST endpoints</strong> across a multi-tenant IoT self-service platform: three Next.js and TypeScript apps on a Node.js, Express and PostgreSQL backend, architected end to end.
           </>,
           <>
-            <strong>200+ automated tests</strong> covering JWT authentication, role-based access
-            control and tenant isolation.
+            <strong>Secured payments</strong> with server-side pricing, HMAC-verified Razorpay webhooks and idempotent capture, closing price-tampering and duplicate-charge paths across every checkout.
           </>,
           <>
-            <strong>Idempotent payment capture</strong> with server-side pricing and
-            signature-verified webhooks, closing price-tampering and duplicate-charge paths.
+            <strong>Concurrency-safe device job queue</strong> with PostgreSQL row-level locking and real-time WebSocket status, backed by JWT/RBAC tenant isolation and <strong>200+ automated tests</strong>.
           </>,
         ],
         images: [],
@@ -178,16 +175,13 @@ const about: About = {
         role: "Software Engineer Intern",
         achievements: [
           <>
-            <strong>45% lower API latency</strong> (800 ms to 440 ms) through async networking,
-            request batching and caching.
+            <strong>25% better application stability</strong> by reproducing intermittent runtime failures and shipping root-cause fixes from performance profiling.
           </>,
           <>
-            <strong>25% lower crash rate</strong> (0.8% to 0.6%) from fixing memory leaks and retain
-            cycles.
+            <strong>45% lower end-to-end API latency</strong> (800 ms to 440 ms) with Swift concurrency, request batching and caching.
           </>,
           <>
-            <strong>20% faster feature integration</strong> with a modular iOS SDK built on MVVM and
-            dependency injection.
+            <strong>20% faster partner integration</strong> and <strong>30% less code duplication</strong> from a modular client SDK with MVVM, dependency injection and reusable service layers.
           </>,
         ],
         images: [],
@@ -198,16 +192,13 @@ const about: About = {
         role: "Frontend Developer Intern",
         achievements: [
           <>
-            <strong>25% faster page loads</strong> (FCP 3.2 s to 2.4 s) through component
-            restructuring and React memoization.
+            <strong>25% faster page loads</strong> (FCP 3.2 s to 2.4 s) by restructuring React.js components with memoization and code splitting.
           </>,
           <>
-            <strong>60% fewer redundant API calls</strong> with centralized Redux state and
-            request caching.
+            <strong>60% fewer redundant API calls</strong> and <strong>40% lower backend load</strong> with centralized state management, API caching and request deduplication.
           </>,
           <>
-            <strong>Under 500 ms</strong> response latency for a real-time WebSocket chatbot
-            handling concurrent sessions.
+            <strong>Under 500 ms</strong> response latency for a real-time WebSocket chatbot on an event-driven architecture, handling concurrent sessions.
           </>,
         ],
         images: [],
@@ -262,6 +253,18 @@ const about: About = {
           { name: "PostgreSQL", icon: "" },
           { name: "Redis", icon: "" },
           { name: "Docker", icon: "" },
+          { name: "REST APIs", icon: "" },
+          { name: "WebSocket", icon: "" },
+          { name: "JWT", icon: "" },
+          { name: "RBAC", icon: "" },
+          { name: "Multi-tenancy", icon: "" },
+          { name: "Razorpay", icon: "" },
+          { name: "Webhooks", icon: "" },
+          { name: "MongoDB", icon: "" },
+          { name: "Supabase (pgvector)", icon: "" },
+          { name: "Caching", icon: "" },
+          { name: "Rate limiting", icon: "" },
+          { name: "Structured logging", icon: "" },
         ],
         images: [],
       },
@@ -273,6 +276,10 @@ const about: About = {
           { name: "LLM APIs", icon: "" },
           { name: "Ollama", icon: "" },
           { name: "Evaluation Harnesses", icon: "" },
+          { name: "Chroma", icon: "" },
+          { name: "Embeddings", icon: "" },
+          { name: "Tool calling", icon: "" },
+          { name: "Structured outputs", icon: "" },
         ],
         images: [],
       },
@@ -289,6 +296,8 @@ const about: About = {
           { name: "Render", icon: "" },
           { name: "AWS S3", icon: "" },
           { name: "Jest", icon: "" },
+          { name: "GitHub Actions", icon: "" },
+          { name: "Supertest", icon: "" },
         ],
         images: [],
       },

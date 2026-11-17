@@ -16,7 +16,7 @@ export const NODE_X: Record<NodeKey, number> = { client: 60, api: 190, cache: 32
 export const NODE_INFO: Record<NodeKey | "none", string> = {
   none: "Hover or tap a node to see what I built there.",
   client:
-    "Next.js + React apps, SwiftUI and a modular iOS SDK. 25% faster page loads at Itigai, 20% faster feature work at DigiValet.",
+    "Next.js + React apps, SwiftUI and a modular iOS SDK. 25% faster page loads at Itigai, 20% faster partner integration at DigiValet.",
   api: "80+ REST endpoints, JWT auth, role-based access and tenant isolation, backed by 200+ automated tests at MLock.",
   cache:
     "Redis caching: 90% less database load on Shortify, and 45% lower API latency at DigiValet through batching and caching.",
@@ -65,7 +65,7 @@ export const CLIENT_CARDS: {
       { value: 25, suffix: "%", label: "faster page loads (FCP 3.2 → 2.4 s)" },
       { value: 60, suffix: "%", label: "fewer redundant API calls" },
     ],
-    note: "React memoization, centralized Redux state, and a real-time WebSocket chatbot answering in under 500 ms.",
+    note: "Code splitting and memoization, centralized state with API caching, and a real-time WebSocket chatbot under 500 ms.",
   },
   {
     company: "DigiValet",
@@ -73,9 +73,9 @@ export const CLIENT_CARDS: {
     when: "Jan – Jun 2026",
     metrics: [
       { value: 45, suffix: "%", label: "lower API latency (800 → 440 ms)" },
-      { value: 25, suffix: "%", label: "lower crash rate (leaks, retain cycles)" },
+      { value: 25, suffix: "%", label: "better app stability (root-caused runtime failures)" },
     ],
-    note: "A modular iOS SDK on MVVM + dependency injection made new features land 20% faster.",
+    note: "A modular client SDK on MVVM + dependency injection cut partner integration time 20% and code duplication 30%.",
   },
 ];
 
