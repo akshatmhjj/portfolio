@@ -4,8 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import type { CSSProperties } from "react";
 import { ProjectArt } from "./ProjectArt";
-import { MetricValue, Rv } from "./ui";
-import { useQueryVariant } from "./variants";
+import { MetricValue } from "./ui";
 
 export type WorkItem = {
   slug: string;
@@ -22,113 +21,81 @@ export type WorkItem = {
   stack: string[];
 };
 
-const cssVar = (v: Record<string, string>) => v as CSSProperties;
-
 /**
- * The /work list. `?work=` picks a layout to compare:
- *  0 current grid · 1 bento (first project as a feature) · 2 layer filter · 3 compact rows
+ * The /work projects as shutter panels. One panel opens wide to show the full project;
+ * the others close into thin strips with their names running up the side.
+ * Hover, focus or click a strip to open it.
  */
 export function WorkList({ items }: { items: WorkItem[] }) {
-  const variant = useQueryVariant("work", "0");
-  const [filter, setFilter] = useState<"all" | "ai" | "data">("all");
-
-  const shown = variant === "2" && filter !== "all" ? items.filter((i) => i.layer === filter) : items;
-  const count = (f: "all" | "ai" | "data") => (f === "all" ? items.length : items.filter((i) => i.layer === f).length);
+  const [active, setActive] = useState(0);
 
   return (
-    <>
-      {variant === "2" && (
-        <div className="wf-chips" role="group" aria-label="Filter projects">
-          {(["all", "ai", "data"] as const).map((f) => (
-            <button key={f} className={`pill ${filter === f ? "on" : ""}`} aria-pressed={filter === f} onClick={() => setFilter(f)}>
-              {f === "all" ? "All" : f === "ai" ? "AI" : "Data"} <span className="mono">{count(f)}</span>
+    <div className="sh-row" role="list" aria-label="Projects">
+      {items.map((p, i) => {
+        const on = i === active;
+        return (
+          <div
+            key={p.slug}
+            role="listitem"
+            className={`sh-panel ${on ? "on" : ""}`}
+            style={{ "--c": p.badgeColor ?? "var(--c1)" } as CSSProperties}
+            onPointerEnter={() => setActive(i)}
+            onFocus={() => setActive(i)}
+            onClick={() => setActive(i)}
+          >
+            <button
+              type="button"
+              className="sh-strip"
+              aria-expanded={on}
+              aria-label={`${p.title}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                setActive(i);
+              }}
+            >
+              <span className="sh-num mono">{String(i + 1).padStart(2, "0")}</span>
+              <span className="sh-name">{p.title}</span>
             </button>
-          ))}
-        </div>
-      )}
 
-      <div className={`wk-grid v${variant}`}>
-        {shown.map((p, i) => {
-          const key = `${filter}-${p.slug}`;
-          if (variant === "3") {
-            const top = p.metrics[0];
-            return (
-              <Rv key={key} delay={(i % 2) * 0.1} style={cssVar({ "--c": p.accent })}>
-                <Link href={`/work/${p.slug}`} className="card ctile" data-art-host>
-                  <div className="cardimg">
-                    <ProjectArt slug={p.slug} title={p.title} image={p.image} />
+            <div className="sh-full" aria-hidden={!on}>
+              <div className="sh-art">
+                <ProjectArt slug={p.slug} title={p.title} image={p.image} />
+              </div>
+              <div className="sh-body">
+                <div className="sh-top mono">
+                  <span>PROJECT · {p.year}</span>
+                  {p.badge && (
+                    <span className="badge" style={{ "--bd": p.badgeColor ?? "var(--c4)" } as CSSProperties}>
+                      {p.badge}
+                    </span>
+                  )}
+                </div>
+                <h2 className="sh-title">{p.title}</h2>
+                {p.role && <div className="sh-role">{p.role}</div>}
+                <p className="sh-sum">{p.summary}</p>
+                {p.metrics[0] && (
+                  <div className="sh-metric">
+                    <b>
+                      <MetricValue value={p.metrics[0].value} />
+                    </b>
+                    <span>{p.metrics[0].label}</span>
                   </div>
-                  <div className="ct-body">
-                    <div className="ct-top">
-                      <h2 className="wt">{p.title}</h2>
-                      {p.badge && (
-                        <span className="badge" style={cssVar({ "--bd": p.badgeColor ?? "var(--c4)" })}>
-                          {p.badge}
-                        </span>
-                      )}
-                    </div>
-                    {top && (
-                      <div className="ct-metric">
-                        <b>
-                          <MetricValue value={top.value} />
-                        </b>
-                        <span>{top.label}</span>
-                      </div>
-                    )}
-                  </div>
-                  <span className="wgo" aria-hidden>
-                    →
-                  </span>
+                )}
+                <div className="chips">
+                  {p.stack.slice(0, 5).map((s) => (
+                    <span className="chip" key={s}>
+                      {s}
+                    </span>
+                  ))}
+                </div>
+                <Link className="sh-go" href={`/work/${p.slug}`} tabIndex={on ? 0 : -1}>
+                  Read the case study <span aria-hidden>→</span>
                 </Link>
-              </Rv>
-            );
-          }
-
-          const feature = variant === "1" && i === 0;
-          return (
-            <Rv key={key} delay={(i % 2) * 0.1} style={cssVar({ "--c": p.accent })} className={feature ? "feature" : ""}>
-              <Link href={`/work/${p.slug}`} className="card wcard" data-art-host>
-                <div className="cardimg">
-                  <ProjectArt slug={p.slug} title={p.title} image={p.image} />
-                </div>
-                <div className="wtext">
-                  <div className="crow">
-                    <span className="mono">PROJECT · {p.year}</span>
-                    {p.badge && (
-                      <span className="badge" style={cssVar({ "--bd": p.badgeColor ?? "var(--c4)" })}>
-                        {p.badge}
-                      </span>
-                    )}
-                  </div>
-                  <h2 className="wt">{p.title}</h2>
-                  {p.role && <div className="role">{p.role}</div>}
-                  <p className="wsum">{p.summary}</p>
-                  <div className="mx">
-                    {p.metrics.map((x) => (
-                      <div className="m" key={x.label}>
-                        <b>
-                          <MetricValue value={x.value} />
-                        </b>
-                        <span>{x.label}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="chips">
-                    {p.stack.map((s) => (
-                      <span className="chip" key={s}>
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="wgo">
-                    Read the case study <span aria-hidden>→</span>
-                  </div>
-                </div>
-              </Link>
-            </Rv>
-          );
-        })}
-      </div>
-    </>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
   );
 }

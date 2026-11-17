@@ -2389,122 +2389,218 @@ html[data-theme="light"] .rq {
 }
 
 /* ------------------------------------------------------------------
-   DESIGN VARIANTS (temporary): work ?work=1|2|3
+   Work: shutter panels (one open, the rest close into strips)
    ------------------------------------------------------------------ */
-/* work: filter chips */
-.rq .wf-chips {
+.rq .sh-row {
   display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin: 0 0 22px;
+  gap: 12px;
+  height: 600px;
 }
-.rq .wf-chips .pill {
-  display: inline-flex;
-  gap: 8px;
-  align-items: center;
-  padding: 9px 16px;
-}
-.rq .wf-chips .pill .mono {
-  color: inherit;
-  opacity: 0.7;
-}
-.rq .wf-chips .pill.on {
-  background: var(--btnpri-bg);
-  color: var(--btnpri-fg);
-  border-color: transparent;
-}
-
-/* work: bento (first project as a feature) */
-.rq .wtext {
-  display: block;
-}
-.rq .wk-grid.v1 .feature {
-  grid-column: 1 / -1;
-}
-.rq .wk-grid.v1 .feature .wcard {
-  display: grid;
-  grid-template-columns: 1.15fr 1fr;
-  gap: 32px;
-  align-items: center;
-  padding: 18px;
-}
-.rq .wk-grid.v1 .feature .wcard .cardimg {
-  margin: 0;
-}
-.rq .wk-grid.v1 .feature .wcard h2 {
-  font-size: clamp(34px, 4.2vw, 56px);
-}
-
-/* work: compact rows */
-.rq .wk-grid.v3 {
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
-}
-.rq .wk-grid.v3 > div {
-  display: flex;
-}
-.rq .ctile {
-  flex: 1;
-  display: grid;
-  grid-template-columns: 180px 1fr auto;
-  gap: 18px;
-  align-items: center;
-  padding: 12px;
-  border-radius: 18px;
-}
-.rq .ctile .cardimg {
-  margin: 0;
-}
-.rq .ctile .ct-body {
+.rq .sh-panel {
+  position: relative;
+  flex: 0.5 1 0;
   min-width: 0;
+  border-radius: 26px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 30px 70px -36px var(--shadow);
+  transition: flex-grow 0.85s var(--ease), border-color 0.4s, box-shadow 0.5s;
 }
-.rq .ctile .ct-top {
+.rq .sh-panel.on {
+  flex-grow: 5;
+  cursor: default;
+  border-color: color-mix(in srgb, var(--c) 40%, transparent);
+}
+.rq .sh-strip {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
   display: flex;
-  gap: 10px;
+  flex-direction: column;
   align-items: center;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 22px 0;
+  color: var(--text);
+  transition: opacity 0.45s var(--ease) 0.1s;
 }
-.rq .ctile h2 {
-  font: 700 22px var(--head);
-  letter-spacing: -0.02em;
-  margin: 0;
+.rq .sh-panel.on .sh-strip {
+  opacity: 0;
+  pointer-events: none;
 }
-.rq .ctile .ct-metric {
-  margin-top: 10px;
+.rq .sh-strip:focus-visible {
+  outline: 2px solid var(--c);
+  outline-offset: -6px;
+  border-radius: 22px;
 }
-.rq .ctile .ct-metric b {
-  display: block;
-  font: 800 24px / 1 var(--head);
+.rq .sh-num {
+  font-size: 12px;
+  color: var(--c);
+}
+.rq .sh-name {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font: 800 26px / 1 var(--head);
   letter-spacing: -0.03em;
   white-space: nowrap;
 }
-.rq .ctile .ct-metric > span {
+.rq .sh-full {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 820px;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.4s var(--ease), transform 0.8s var(--ease);
+  pointer-events: none;
+}
+.rq .sh-panel.on .sh-full {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.6s var(--ease) 0.35s, transform 0.9s var(--ease) 0.2s;
+  pointer-events: auto;
+}
+.rq .sh-art {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+.rq .sh-art .art {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+.rq .sh-body {
+  display: flex;
+  flex-direction: column;
+  padding: 30px 34px 28px 22px;
+  min-width: 0;
+}
+.rq .sh-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+}
+.rq .sh-title {
+  margin: 16px 0 4px;
+  font: 800 clamp(36px, 3.8vw, 50px) / 1 var(--head);
+  letter-spacing: -0.04em;
+  color: var(--text);
+}
+.rq .sh-role {
+  font: 600 13px var(--mono);
+  color: var(--c);
+}
+.rq .sh-sum {
+  margin-top: 14px;
+  color: var(--soft);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.rq .sh-metric {
+  margin-top: 18px;
+}
+.rq .sh-metric b {
   display: block;
-  margin-top: 4px;
+  font: 800 40px / 1 var(--head);
+  letter-spacing: -0.04em;
+  color: var(--c);
+  white-space: nowrap;
+}
+.rq .sh-metric > span {
+  display: block;
+  margin-top: 6px;
   font-size: 13px;
   color: var(--mute);
 }
-.rq .ctile .wgo {
-  margin: 0 8px 0 0;
-  font-size: 22px;
+.rq .sh-body .chips {
+  margin-top: 16px;
+}
+.rq .sh-go {
+  margin-top: auto;
+  padding-top: 16px;
+  font: 600 14px var(--sans);
+  color: var(--c);
+  display: inline-flex;
+  gap: 8px;
 }
 
-@media (max-width: 759px) {
-  .rq .wk-grid.v1 .feature .wcard {
-    grid-template-columns: 1fr;
+/* phone: panels stack and open downwards */
+@media (max-width: 899px) {
+  .rq .sh-row {
+    flex-direction: column;
+    height: auto;
+    gap: 10px;
   }
-}
-@media (max-width: 999px) {
-  .rq .wk-grid.v3 {
-    grid-template-columns: 1fr;
+  .rq .sh-panel {
+    flex: none;
+    display: grid;
+    grid-template-rows: 76px 0fr;
+    transition: grid-template-rows 0.7s var(--ease), border-color 0.4s;
   }
-}
-@media (max-width: 700px) {
-  .rq .ctile {
-    grid-template-columns: 110px 1fr;
+  .rq .sh-panel.on {
+    flex-grow: 0;
+    grid-template-rows: 76px 1fr;
   }
-  .rq .ctile .wgo {
+  .rq .sh-strip {
+    position: static;
+    grid-row: 1;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 14px;
+    padding: 0 20px;
+    opacity: 1;
+    pointer-events: auto;
+    width: 100%;
+    height: 76px;
+  }
+  .rq .sh-panel.on {
+    grid-template-rows: 0px 1fr;
+  }
+  .rq .sh-panel.on .sh-strip {
     display: none;
+  }
+  .rq .sh-name {
+    writing-mode: horizontal-tb;
+    transform: none;
+    font-size: 24px;
+  }
+  .rq .sh-full {
+    position: relative;
+    grid-row: 2;
+    width: auto;
+    height: auto;
+    min-height: 0;
+    grid-template-columns: 1fr;
+    overflow: hidden;
+    transform: none;
+    transition: opacity 0.5s var(--ease);
+  }
+  .rq .sh-panel.on .sh-full {
+    transition: opacity 0.6s var(--ease) 0.2s;
+  }
+  .rq .sh-art {
+    padding: 10px 10px 0;
+  }
+  .rq .sh-art .art {
+    aspect-ratio: 16 / 9;
+    height: auto;
+  }
+  .rq .sh-body {
+    padding: 18px 20px 22px;
+  }
+  .rq .sh-title {
+    font-size: 34px;
   }
 }
 
