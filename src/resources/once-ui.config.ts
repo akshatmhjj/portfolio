@@ -23,7 +23,6 @@ const baseURL: string = "https://www.akshatmahajan.in";
 // "/work" lists all projects.
 const routes: RoutesConfig = {
   "/": true,
-  "/work": true,
 };
 
 const display: DisplayConfig = {

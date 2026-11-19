@@ -2,11 +2,11 @@ import { Fragment } from "react";
 import { Meta, Schema } from "@/lib/seo";
 import { baseURL, about, person, social } from "@/resources";
 import { getSortedPosts } from "@/components/request/projects";
+import { PROJECT_META } from "@/components/request/data";
 import { ogUrl } from "@/components/request/og";
-import RequestSite from "@/components/request/RequestSite";
-import type { ProjectData } from "@/components/request/types";
+import FolioSite from "@/components/folio/FolioSite";
 
-// Link-preview image for the home page (matches the site's design).
+// Link-preview image for the home page.
 const homeOg = ogUrl({
   kind: "home",
   title: person.name,
@@ -23,24 +23,26 @@ export async function generateMetadata() {
   });
 }
 
-// Projects come straight from the MDX files in src/app/work/projects,
-// so adding/editing a project there updates this page too.
-function loadProjects(): ProjectData[] {
-  return getSortedPosts()
-    .map((p) => ({
-      slug: p.slug,
-      title: p.metadata.title,
-      summary: p.metadata.summary,
-      image: p.metadata.image || p.metadata.images[0] || "",
-      link: p.metadata.link || "",
-      source: p.metadata.source || "",
-      stack: p.metadata.stack || [],
-      metrics: p.metadata.metrics || [],
-      year: new Date(p.metadata.publishedAt).getFullYear(),
-    }));
-}
-
 export default function Home() {
+  const projects = getSortedPosts().map((p) => {
+    const m = p.metadata;
+    const meta = PROJECT_META[p.slug];
+    return {
+      slug: p.slug,
+      title: m.title,
+      summary: m.summary,
+      image: m.image || m.images[0] || "",
+      year: new Date(m.publishedAt).getFullYear(),
+      role: meta?.role ?? "",
+      badge: meta?.badge ?? "",
+      stack: m.stack || [],
+      metrics: (m.metrics || []).slice(0, 3),
+      flow: meta?.flow ?? [],
+      link: m.link || "",
+      source: m.source || "",
+    };
+  });
+
   return (
     <>
       <Schema
@@ -50,36 +52,34 @@ export default function Home() {
         description={about.description}
         path={about.path}
         image={homeOg}
-        author={{
-          name: person.name,
-          url: `${baseURL}${about.path}`,
-          image: `${baseURL}${person.avatar}`,
-        }}
+        author={{ name: person.name, url: `${baseURL}${about.path}`, image: `${baseURL}${person.avatar}` }}
       />
-      <RequestSite
-        person={{
-          name: person.name,
-          role: person.role,
-          email: person.email,
-          location: person.location,
-          languages: person.languages ?? [],
-          avatar: person.avatar,
-        }}
-        social={social.map((s) => ({ name: s.name, link: s.link }))}
-        projects={loadProjects()}
-        resumeHref={encodeURI("/Akshat Mahajan Resume.pdf")}
-        about={{
-          experience: about.work.experiences.map((e) => ({
-            company: e.company,
-            role: e.role,
-            timeframe: e.timeframe,
-            achievements: e.achievements.map((a, i) => <Fragment key={i}>{a}</Fragment>),
-          })),
-          skills: about.technical.skills.map((g) => ({ title: g.title, tags: (g.tags ?? []).map((t) => t.name) })),
-          education: about.studies.institutions.map((i) => ({ name: i.name, description: i.description })),
-          certifications: about.certifications.items.map((c) => ({ name: c.name, link: c.link })),
-        }}
-      />
+      <FolioSite
+      links={[
+        ...social.filter((x) => x.name !== "Email").map((x) => ({ name: x.name, href: x.link })),
+        { name: "Resume", href: encodeURI("/Akshat Mahajan Resume.pdf") },
+      ]}
+      person={{
+        name: person.name,
+        role: person.role,
+        location: person.location,
+        email: person.email,
+        avatar: person.avatar,
+        languages: person.languages ?? [],
+      }}
+      about={{
+        experience: about.work.experiences.map((e) => ({
+          company: e.company,
+          role: e.role,
+          timeframe: e.timeframe,
+          achievements: e.achievements.map((a, i) => <Fragment key={i}>{a}</Fragment>),
+        })),
+        skills: about.technical.skills.map((g) => ({ title: g.title, tags: (g.tags ?? []).map((t) => t.name) })),
+        education: about.studies.institutions.map((i) => ({ name: i.name, description: i.description })),
+        certifications: about.certifications.items.map((c) => ({ name: c.name, link: c.link })),
+      }}
+      projects={projects}
+    />
     </>
   );
 }

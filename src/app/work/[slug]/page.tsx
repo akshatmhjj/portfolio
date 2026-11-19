@@ -9,7 +9,7 @@ import { Toc } from "@/components/request/Chrome";
 import { getHeadings } from "@/components/request/slug";
 import { getSortedPosts, projectAccent } from "@/components/request/projects";
 import { PROJECT_META } from "@/components/request/data";
-import { MetricValue, Rv } from "@/components/request/ui";
+import { MetricValue } from "@/components/request/ui";
 import { ProjectArt } from "@/components/request/ProjectArt";
 import { ogUrl, projectAccentHex } from "@/components/request/og";
 import { ScrollToHash } from "@/components/ScrollToHash";
@@ -86,28 +86,24 @@ export default async function Project({ params }: { params: Promise<{ slug: stri
         }}
       />
 
-      <section className="dt-top">
-        <Link href="/work" className="back mono">
-          ← all work
+      <section className="fo-dt-top">
+        <Link href="/#work" className="fo-dt-back mono">
+          ← all projects
         </Link>
-        <div className="dt-meta">
-          <span className="mono">PROJECT · {new Date(m.publishedAt).getFullYear()}</span>
+        <div className="fo-dt-meta mono">
+          <span>PROJECT · {new Date(m.publishedAt).getFullYear()}</span>
           {meta && (
             <span className="badge" style={{ "--bd": meta.badgeColor } as React.CSSProperties}>
               {meta.badge}
             </span>
           )}
-          {meta && <span className="role">{meta.role}</span>}
+          {meta && <span>{meta.role}</span>}
         </div>
-        <Rv as="h1" className="h1 dt-title" now>
-          {m.title}
-        </Rv>
-        <Rv as="p" className="lede dt-lede" delay={0.08} now>
-          {m.summary}
-        </Rv>
+        <h1 className="fo-dt-title">{m.title}</h1>
+        <p className="fo-dt-lede">{m.summary}</p>
 
         {m.versions && m.versions.length > 0 && (
-          <div className="vers">
+          <div className="fo-dt-vers">
             {m.versions.map((v) => (
               <a key={v.label} href={v.link} target="_blank" rel="noopener noreferrer" className="chip">
                 <b>{v.label}</b> {v.name} ↗<span className="sr"> (opens in a new tab)</span>
@@ -116,39 +112,39 @@ export default async function Project({ params }: { params: Promise<{ slug: stri
           </div>
         )}
 
-        <div className="actions">
+        <div className="fo-dt-actions">
           {m.link && (
-            <a className="btn pri" href={m.link} target="_blank" rel="noopener noreferrer">
+            <a className="fo-btn pri" href={m.link} target="_blank" rel="noopener noreferrer">
               Live site ↗<span className="sr"> (opens in a new tab)</span>
             </a>
           )}
           {m.source && (
-            <a className="btn ghost" href={m.source} target="_blank" rel="noopener noreferrer">
+            <a className="fo-btn" href={m.source} target="_blank" rel="noopener noreferrer">
               Source ↗<span className="sr"> (opens in a new tab)</span>
             </a>
           )}
         </div>
       </section>
 
-      <Rv className="dt-cover" data-art-host>
+      <div className="fo-dt-cover" data-art-host>
         <ProjectArt slug={post.slug} title={m.title} image={cover} />
-      </Rv>
+      </div>
 
       {m.metrics && m.metrics.length > 0 && (
-        <Rv className="mx dt-stats">
+        <div className="fo-dt-stats">
           {m.metrics.map((x) => (
-            <div className="m" key={x.label}>
+            <div key={x.label}>
               <b>
                 <MetricValue value={x.value} />
               </b>
               <span>{x.label}</span>
             </div>
           ))}
-        </Rv>
+        </div>
       )}
 
       {m.stack && m.stack.length > 0 && (
-        <div className="chips dt-stack">
+        <div className="chips fo-dt-stack">
           {m.stack.map((s) => (
             <span className="chip" key={s}>
               {s}
@@ -157,19 +153,7 @@ export default async function Project({ params }: { params: Promise<{ slug: stri
         </div>
       )}
 
-      {meta && (
-        <div className="dt-flow">
-          <div className="eyebrow">how it works</div>
-          <div className="flow">
-            {meta.flow.map((f, i) => (
-              <span key={f} style={{ display: "contents" }}>
-                {i > 0 && <i>→</i>}
-                <span>{f}</span>
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
+      {meta && <div className="fo-dt-flow mono">{meta.flow.join("  →  ")}</div>}
 
       <div className="doc">
         {headings.length > 1 ? <Toc items={headings} /> : <div />}
@@ -178,12 +162,12 @@ export default async function Project({ params }: { params: Promise<{ slug: stri
         </article>
       </div>
 
-      <nav className="nextnav" aria-label="More projects">
-        <Link href={`/work/${prev.slug}`} className="card">
+      <nav className="fo-dt-next" aria-label="More projects">
+        <Link href={`/work/${prev.slug}`}>
           <span className="mono">← previous</span>
           <h3>{prev.metadata.title}</h3>
         </Link>
-        <Link href={`/work/${next.slug}`} className="card" style={{ textAlign: "right" }}>
+        <Link href={`/work/${next.slug}`}>
           <span className="mono">next →</span>
           <h3>{next.metadata.title}</h3>
         </Link>

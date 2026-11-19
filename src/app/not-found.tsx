@@ -9,20 +9,18 @@ export const metadata = {
 export default function NotFound() {
   return (
     <RqPage>
-      <section className="wk-hero" style={{ "--c": "var(--c5)" } as React.CSSProperties}>
-        <span className="stag">404 · not found</span>
-        <h1 className="h1 wk-title">
-          Request <span className="grad">failed.</span>
-        </h1>
-        <p className="lede">
-          The page you asked for doesn&apos;t exist, or it moved. The rest of the system is up.
-        </p>
-        <div className="actions">
-          <Link className="btn pri" href="/">
-            Back to the request
+      <section className="fo-404">
+        <div className="fo-404-num" aria-hidden="true">
+          404
+        </div>
+        <h1>This page wandered off.</h1>
+        <p>The page you asked for doesn&apos;t exist, or it moved. The rest of the portfolio is right where you left it.</p>
+        <div className="fo-cta">
+          <Link className="fo-btn pri" href="/">
+            Back to home
           </Link>
-          <Link className="btn ghost" href="/work">
-            See the work
+          <Link className="fo-btn" href="/#work">
+            See the projects
           </Link>
         </div>
       </section>
